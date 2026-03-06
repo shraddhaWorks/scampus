@@ -1,0 +1,1 @@
+export const AVATAR_URL='https://th.bing.com/th/id/OIP.DEJkHVGN8dM_kyeZA8t3fgHaHa?w=191&h=191&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3';

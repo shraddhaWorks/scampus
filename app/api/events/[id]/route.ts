@@ -1,0 +1,190 @@
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import prisma from "@/lib/db";
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+    let schoolId = session.user.schoolId;
+    if (!schoolId) {
+      const adminSchool = await prisma.school.findFirst({
+        where: { admins: { some: { id: session.user.id } } },
+        select: { id: true },
+      });
+      schoolId = adminSchool?.id ?? null;
+      if (!schoolId && session.user.role === "TEACHER") {
+        const teacherSchool = await prisma.school.findFirst({
+          where: { teachers: { some: { id: session.user.id } } },
+          select: { id: true },
+        });
+        schoolId = teacherSchool?.id ?? null;
+      }
+    }
+    if (!schoolId) {
+      return NextResponse.json(
+        { message: "School not found in session" },
+        { status: 400 }
+      );
+    }
+
+    const {
+      title,
+      description,
+      type,
+      level,
+      location,
+      mode,
+      additionalInfo,
+      photo,
+      eventDate,
+      maxSeats,
+      amount,
+    } = await req.json();
+
+    if (
+      !title ||
+      !description ||
+      !type ||
+      !level ||
+      !location ||
+      !mode ||
+      !additionalInfo
+    ) {
+      return NextResponse.json(
+        {
+          message:
+            "Title, description, type, level, location, mode and additionalInfo are required",
+        },
+        { status: 400 }
+      );
+    }
+
+    const existing = await prisma.event.findFirst({
+      where: { id, schoolId },
+    });
+
+    if (!existing) {
+      return NextResponse.json({ message: "Event not found" }, { status: 404 });
+    }
+
+    let parsedEventDate: Date | null = null;
+    if (eventDate) {
+      const parsed = new Date(eventDate);
+      if (Number.isNaN(parsed.getTime())) {
+        return NextResponse.json(
+          { message: "Invalid eventDate" },
+          { status: 400 }
+        );
+      }
+      parsedEventDate = parsed;
+    }
+
+    const eventAmount = typeof amount === "number" && amount >= 0 ? amount : (typeof amount === "string" ? parseFloat(amount) || 0 : 0);
+
+    const updated = await prisma.event.update({
+      where: { id },
+      data: {
+        title,
+        description,
+        type,
+        level,
+        location,
+        mode,
+        additionalInfo,
+        eventDate: parsedEventDate,
+        photo: photo ?? null,
+        maxSeats: maxSeats != null && typeof maxSeats === "number" ? maxSeats : null,
+        amount: Math.max(0, eventAmount),
+      },
+      include: {
+        class: {
+          select: { id: true, name: true, section: true },
+        },
+        teacher: {
+          select: { id: true, name: true, email: true },
+        },
+        _count: {
+          select: { registrations: true },
+        },
+      },
+    });
+
+    return NextResponse.json(
+      { message: "Event updated successfully", event: updated },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("Update event error:", error);
+    return NextResponse.json(
+      { message: error?.message || "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+    let schoolId = session.user.schoolId;
+    if (!schoolId) {
+      const adminSchool = await prisma.school.findFirst({
+        where: { admins: { some: { id: session.user.id } } },
+        select: { id: true },
+      });
+      schoolId = adminSchool?.id ?? null;
+      if (!schoolId && session.user.role === "TEACHER") {
+        const teacherSchool = await prisma.school.findFirst({
+          where: { teachers: { some: { id: session.user.id } } },
+          select: { id: true },
+        });
+        schoolId = teacherSchool?.id ?? null;
+      }
+    }
+    if (!schoolId) {
+      return NextResponse.json(
+        { message: "School not found in session" },
+        { status: 400 }
+      );
+    }
+
+    const existing = await prisma.event.findFirst({
+      where: { id, schoolId },
+    });
+
+    if (!existing) {
+      return NextResponse.json({ message: "Event not found" }, { status: 404 });
+    }
+
+    await prisma.event.delete({ where: { id } });
+
+    return NextResponse.json(
+      { message: "Event deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("Delete event error:", error);
+    return NextResponse.json(
+      { message: error?.message || "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

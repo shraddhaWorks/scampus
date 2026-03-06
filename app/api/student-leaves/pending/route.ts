@@ -1,0 +1,79 @@
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import prisma from "@/lib/db";
+
+export async function GET() {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+
+    const role = session.user.role;
+    if (role !== "TEACHER" && role !== "SCHOOLADMIN") {
+      return NextResponse.json({ message: "Only teachers or school admin can view pending student leaves" }, { status: 403 });
+    }
+
+    let schoolId = session.user.schoolId;
+    if (!schoolId) {
+      const school = await prisma.school.findFirst({
+        where: {
+          OR: [
+            { admins: { some: { id: session.user.id } } },
+            { teachers: { some: { id: session.user.id } } },
+          ],
+        },
+        select: { id: true },
+      });
+      schoolId = school?.id ?? null;
+    }
+    if (!schoolId) return NextResponse.json({ message: "School not found" }, { status: 400 });
+
+    const leaves = await prisma.studentLeaveRequest.findMany({
+      where: {
+        schoolId,
+        status: "PENDING", // only pending
+      },
+      select: {
+        id: true,
+        leaveType: true,
+        reason: true,
+        fromDate: true,
+        toDate: true,
+        status: true,
+        remarks: true,
+        createdAt: true,
+
+
+        student: {
+          select: {
+            id: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                photoUrl: true, // needed for avatar
+              },
+            },
+            class: {
+              select: {
+                id: true,
+                name: true,
+                section: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json(leaves, { status: 200 });
+  } catch (e: unknown) {
+    console.error("Student leaves pending:", e);
+    return NextResponse.json(
+      { message: e instanceof Error ? e.message : "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

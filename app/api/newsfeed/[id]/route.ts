@@ -1,0 +1,140 @@
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import prisma from "@/lib/db";
+
+async function verifyAndGetFeed(id: string, schoolId: string) {
+  const rows = await prisma.$queryRawUnsafe<{ id: string }[]>(
+    `SELECT id FROM "NewsFeed" WHERE id = $1 AND "schoolId" = $2`,
+    id,
+    schoolId
+  );
+  return rows[0] ?? null;
+}
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+    const body = await req.json();
+    const title = typeof body.title === "string" ? body.title.trim() : undefined;
+    const description = typeof body.description === "string" ? body.description.trim() : undefined;
+    const photo = typeof body.photo === "string" ? body.photo : typeof body.mediaUrl === "string" ? body.mediaUrl : undefined;
+
+    const schoolId = session.user.schoolId as string | undefined;
+    if (!schoolId) {
+      return NextResponse.json({ message: "School not found in session" }, { status: 400 });
+    }
+
+    const exists = await verifyAndGetFeed(id, schoolId);
+    if (!exists) {
+      return NextResponse.json(
+        { message: "News feed not found or doesn't belong to your school" },
+        { status: 404 }
+      );
+    }
+
+    try {
+      const updated = await prisma.newsFeed.update({
+        where: { id },
+        data: {
+          ...(title != null && title !== "" && { title }),
+          ...(description != null && description !== "" && { description }),
+          ...(photo !== undefined && { photo: photo || null }),
+        },
+        include: {
+          createdBy: { select: { id: true, name: true, email: true } },
+        },
+      });
+      return NextResponse.json(
+        { message: "News feed updated successfully", newsFeed: updated },
+        { status: 200 }
+      );
+    } catch {
+      // Fallback: raw SQL update
+      const parts: string[] = [];
+      const values: unknown[] = [];
+      let idx = 1;
+      if (title != null && title !== "") {
+        parts.push(`title = $${idx++}`);
+        values.push(title);
+      }
+      if (description != null && description !== "") {
+        parts.push(`description = $${idx++}`);
+        values.push(description);
+      }
+      if (photo !== undefined) {
+        parts.push(`photo = $${idx++}`);
+        values.push(photo || null);
+      }
+      if (parts.length === 0) {
+        return NextResponse.json({ message: "News feed updated successfully", newsFeed: {} }, { status: 200 });
+      }
+      values.push(id, schoolId);
+      await prisma.$executeRawUnsafe(
+        `UPDATE "NewsFeed" SET ${parts.join(", ")}, "updatedAt" = NOW() WHERE id = $${idx} AND "schoolId" = $${idx + 1}`,
+        ...values
+      );
+      return NextResponse.json(
+        { message: "News feed updated successfully", newsFeed: {} },
+        { status: 200 }
+      );
+    }
+  } catch (error: unknown) {
+    console.error("Update news feed error:", error);
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+    const schoolId = session.user.schoolId as string | undefined;
+    if (!schoolId) {
+      return NextResponse.json({ message: "School not found in session" }, { status: 400 });
+    }
+
+    const exists = await verifyAndGetFeed(id, schoolId);
+    if (!exists) {
+      return NextResponse.json(
+        { message: "News feed not found or doesn't belong to your school" },
+        { status: 404 }
+      );
+    }
+
+    try {
+      await prisma.newsFeed.delete({ where: { id } });
+    } catch {
+      await prisma.$executeRawUnsafe(
+        `DELETE FROM "NewsFeed" WHERE id = $1 AND "schoolId" = $2`,
+        id,
+        schoolId
+      );
+    }
+    return NextResponse.json({ message: "News feed deleted successfully" }, { status: 200 });
+  } catch (error: unknown) {
+    console.error("Delete news feed error:", error);
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
