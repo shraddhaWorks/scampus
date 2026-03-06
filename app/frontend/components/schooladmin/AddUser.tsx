@@ -17,10 +17,15 @@ import StatusBadge from "./schooladmincomponents/StatusBadge";
 import UsersMobileList from "./schooladmincomponents/UsersMobileList";
 import InlinePagination from "./schooladmincomponents/InlinePagination";
 import { IUser } from "@/app/frontend/constants/addUserTable";
+
+function canEditRole(role: string): boolean {
+  return ["TEACHER", "HOD", "PRINCIPAL"].includes(role);
+}
+
 export default function AddUser() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const activeTab = searchParams.get("view") ?? "all";
+  const activeTab = searchParams.get("view") ?? "add";
   const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -128,6 +133,14 @@ export default function AddUser() {
       render: (row: IUser) => <RoleBadge role={row.role} />,
     },
     {
+      header: "DEPARTMENT",
+      render: (row: IUser) => (
+        <span className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+          {row.department || "—"}
+        </span>
+      ),
+    },
+    {
       header: "STATUS",
       render: () => <StatusBadge status="active" />,
     },
@@ -146,18 +159,18 @@ export default function AddUser() {
         <div className="flex justify-center gap-2">
           {row.role !== "SCHOOLADMIN" && (
             <motion.button
-              whileHover={{ scale: row.role === "TEACHER" ? 1.1 : 1 }}
-              whileTap={{ scale: row.role === "TEACHER" ? 0.95 : 1 }}
-              disabled={row.role !== "TEACHER"}
-              onClick={() => row.role === "TEACHER" && handleEdit(row)}
-              className={`p-2 rounded-lg transition-colors ${row.role === "TEACHER"
+              whileHover={{ scale: canEditRole(row.role) ? 1.1 : 1 }}
+              whileTap={{ scale: canEditRole(row.role) ? 0.95 : 1 }}
+              disabled={!canEditRole(row.role)}
+              onClick={() => canEditRole(row.role) && handleEdit(row)}
+              className={`p-2 rounded-lg transition-colors ${canEditRole(row.role)
                   ? "hover:bg-white/10 text-gray-400 hover:text-white"
                   : "bg-white/5 text-gray-500/70 cursor-not-allowed"
                 }`}
               title={
-                row.role === "TEACHER"
+                canEditRole(row.role)
                   ? "Edit user"
-                  : "Editing is currently available for teachers only"
+                  : "Editing is available for Principal, HOD, and Teacher only"
               }
             >
               <Pencil size={18} />
@@ -219,6 +232,8 @@ export default function AddUser() {
                       placeholder: "All Roles",
                       options: [
                         { label: "Admin", value: "SCHOOLADMIN" },
+                        { label: "Principal", value: "PRINCIPAL" },
+                        { label: "HOD", value: "HOD" },
                         { label: "Teacher", value: "TEACHER" },
                         { label: "Student", value: "STUDENT" },
                       ],
@@ -281,6 +296,7 @@ export default function AddUser() {
                   confirmPassword: "",
                   allowedFeatures:
                     (editingUser as any).allowedFeatures ?? [],
+                  department: (editingUser as any).department ?? "",
                 }
                 : undefined
             }

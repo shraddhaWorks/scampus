@@ -67,6 +67,13 @@ export const buildStudentColumns = ({
     ),
   },
   {
+    header: "Department",
+    render: (row) => (
+      <span className="text-sm text-gray-300">{(row as { department?: string | null }).department || "-"}</span>
+    ),
+    hideOnMobile: true,
+  },
+  {
     header: "Prev. School",
     render: (row) => (
       <span className="text-sm text-gray-300">{row.previousSchool || "-"}</span>

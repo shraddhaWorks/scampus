@@ -68,6 +68,7 @@ export async function POST(req: Request) {
       rollNo,
       gender: genderInput,
       previousSchool: previousSchoolInput,
+      department: departmentInput,
     } = body;
 
     // Validate all required fields
@@ -280,7 +281,7 @@ export async function POST(req: Request) {
             email: userEmail,
             password: hashedPassword,
             role: Role.STUDENT,
-            schoolId,
+            ...(schoolId ? { school: { connect: { id: schoolId } } } : {}),
           },
         });
 
@@ -296,6 +297,10 @@ export async function POST(req: Request) {
           typeof previousSchoolInput === "string" && previousSchoolInput.trim()
             ? previousSchoolInput.trim()
             : null;
+        const department =
+          typeof departmentInput === "string" && departmentInput.trim()
+            ? departmentInput.trim()
+            : null;
 
         const studentRecord = await tx.student.create({
           data: {
@@ -306,6 +311,7 @@ export async function POST(req: Request) {
             dob: dobDate,
             address,
             gender,
+            department,
             previousSchool,
             fatherName: String(fatherName).trim(),
             aadhaarNo: aadhaarCleaned,

@@ -153,7 +153,7 @@ export const authOptions: NextAuthOptions = {
     session.user = {
       ...session.user,
       id: token.id as string,
-      role: token.role as "SUPERADMIN" | "SCHOOLADMIN" | "TEACHER" | "STUDENT",
+      role: token.role as "SUPERADMIN" | "SCHOOLADMIN" | "PRINCIPAL" | "HOD" | "TEACHER" | "STUDENT",
       schoolId: token.schoolId as string | null,
       mobile: token.mobile as string | null,
       studentId: token.studentId as string | null,

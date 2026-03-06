@@ -35,6 +35,7 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
         teacherStatus: true,
         mobile: true,
         address: true,
+        department: true,
         assignedClasses: { select: { id: true, name: true, section: true } },
       },
     });
@@ -96,6 +97,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       mobile,
       address,
       photoUrl,
+      department,
     } = body;
 
     console.log(`[PUT] /api/user/${id} called by ${session.user?.id} (role=${session.user?.role})`);
@@ -167,8 +169,10 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       if (teacherStatus !== undefined) updateData.teacherStatus = teacherStatus && String(teacherStatus).trim() ? String(teacherStatus).trim() : "Active";
       if (mobile !== undefined) updateData.mobile = mobile && String(mobile).trim() ? String(mobile).trim() : null;
       if (address !== undefined) updateData.address = address && String(address).trim() ? String(address).trim() : null;
+      if (department !== undefined) updateData.department = department && String(department).trim() ? String(department).trim() : null;
     }
 
+    if (department !== undefined && user.role !== "TEACHER") updateData.department = department && String(department).trim() ? String(department).trim() : null;
     if (photoUrl !== undefined) {
       updateData.photoUrl = photoUrl && String(photoUrl).trim() ? String(photoUrl).trim() : null;
     }
@@ -177,7 +181,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
 
     const updatedUser = await prisma.user.update({
       where: { id },
-      data: updateData,
+      data: updateData as Parameters<typeof prisma.user.update>[0]["data"],
       select: {
         id: true,
         name: true,
@@ -194,6 +198,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         mobile: true,
         address: true,
         photoUrl: true,
+        department: true,
       },
     });
 

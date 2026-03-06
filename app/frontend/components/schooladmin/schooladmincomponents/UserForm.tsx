@@ -1,19 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import { AlertCircle, CheckCircle, Loader, User, Mail, Briefcase, Lock, Shield, User2, Phone, MapPin, Calendar, BookOpen } from "lucide-react";
 import InputField from "./InputField";
 import AllowedFeatureToggle from "./AllowedFeatureToggle";
-import RoleSelector from "./RoleSelector";
-import { Permission } from "@/app/frontend/enums/permissions";
+import RoleSelector, { type AddUserRole } from "./RoleSelector";
+import { FEATURES } from "@/lib/features";
 import Spinner from "../../common/Spinner";
+
+/** Who can create which role (must match backend ALLOWED_CREATOR_ROLES). School Admin add-user tab: Teacher only. */
+const ALLOWED_CREATOR_ROLES: Record<string, AddUserRole[]> = {
+  SCHOOLADMIN: ["TEACHER"],
+  SUPERADMIN: ["PRINCIPAL", "HOD", "TEACHER", "STUDENT"],
+  PRINCIPAL: ["HOD", "TEACHER"],
+  HOD: ["TEACHER"],
+  TEACHER: ["STUDENT"],
+};
+
+/** All app features for access control when adding TEACHER / HOD / PRINCIPAL */
+const AVAILABLE_FEATURES = FEATURES.map((f) => ({ key: f.id, label: f.label }));
 
 interface UserFormData {
   name: string;
   email: string;
-  role: "SCHOOLADMIN" | "TEACHER" | "STUDENT";
+  role: AddUserRole;
   designation?: string;
   username: string;
   password?: string;
@@ -29,6 +42,7 @@ interface UserFormData {
   teacherStatus?: string;
   mobile?: string;
   address?: string;
+  department?: string;
 }
 
 interface UserFormProps {
@@ -36,36 +50,30 @@ interface UserFormProps {
   initialData?: UserFormData & { id?: string };
 }
 
-const AVAILABLE_FEATURES_FOR_TEACHERS = [
-  { key: Permission.DASHBOARD, label: "Dashboard" },
-  { key: Permission.CLASSES, label: "Classes" },
-  { key: Permission.HOMEWORK, label: "Homework" },
-  { key: Permission.MARKS, label: "Marks" },
-  { key: Permission.ATTENDANCE, label: "Attendance" },
-  { key: Permission.EXAMS, label: "Exams & Syllabus" },
-  { key: Permission.WORKSHOPS, label: "Workshops & Events" },
-  { key: Permission.NEWSFEED, label: "Newsfeed" },
-  { key: Permission.CHAT, label: "Parent Chat" },
-  { key: Permission.LEAVES, label: "Leave" },
-  { key: Permission.PROFILE, label: "Profile" },
-  { key: Permission.SETTINGS, label: "Settings" },
-];
-
 export default function UserForm({ mode = "create", initialData }: UserFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { data: session } = useSession();
   const userId = searchParams.get("userId");
+
+  const requesterRole = (session?.user?.role as string)?.toUpperCase() ?? "";
+  const allowedRoles = useMemo(
+    () => ALLOWED_CREATOR_ROLES[requesterRole] ?? ["TEACHER"],
+    [requesterRole]
+  );
 
   const [loading, setLoading] = useState(!!userId && !initialData);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+  const defaultRole = allowedRoles.includes("TEACHER") ? "TEACHER" : allowedRoles[0];
+
   const [formData, setFormData] = useState<UserFormData>(
     initialData || {
       name: "",
       email: "",
-      role: "TEACHER",
+      role: defaultRole,
       designation: "",
       username: "",
       password: "",
@@ -80,8 +88,11 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
       teacherStatus: "Active",
       mobile: "",
       address: "",
+      department: "",
     }
   );
+
+  const showAccessControl = ["TEACHER", "HOD", "PRINCIPAL"].includes(formData.role);
 
   const [classesList, setClassesList] = useState<{ id: string; name: string; section: string | null }[]>([]);
   const [subjectInput, setSubjectInput] = useState("");
@@ -123,6 +134,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
             teacherStatus: userData.teacherStatus || "Active",
             mobile: userData.mobile || "",
             address: userData.address || "",
+            department: userData.department || "",
           });
         } catch (err) {
           setError(err instanceof Error ? err.message : "Failed to load user data");
@@ -133,6 +145,13 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
       fetchUser();
     }
   }, [userId, initialData]);
+
+  // Keep form role within allowed roles (e.g. after session load)
+  useEffect(() => {
+    if (allowedRoles.length > 0 && !allowedRoles.includes(formData.role)) {
+      setFormData((prev) => ({ ...prev, role: defaultRole }));
+    }
+  }, [allowedRoles, defaultRole, formData.role]);
 
   // Fetch classes for teacher assigned classes
   useEffect(() => {
@@ -229,6 +248,10 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
         payload.teacherStatus = formData.teacherStatus || "Active";
         payload.mobile = formData.mobile || undefined;
         payload.address = formData.address || undefined;
+        payload.department = formData.department || undefined;
+      }
+      if (formData.role === "HOD" || formData.role === "PRINCIPAL") {
+        payload.department = formData.department || undefined;
       }
 
       const res = await fetch(endpoint, {
@@ -293,6 +316,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
             <RoleSelector
               value={formData.role}
               onChange={(role) => handleChange("role", role)}
+              allowedRoles={allowedRoles}
             />
           </div>
 
@@ -353,6 +377,16 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                 required
               />
             )}
+
+            {(formData.role === "TEACHER" || formData.role === "HOD" || formData.role === "PRINCIPAL") && (
+              <InputField
+                label="Department"
+                value={formData.department || ""}
+                onChange={(v) => handleChange("department", v)}
+                placeholder="e.g. Mathematics, Science"
+                icon={<Briefcase className="w-4 h-4" />}
+              />
+            )}
           </div>
 
           {/* Teacher-specific fields */}
@@ -364,7 +398,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-white">Teacher Details</h3>
-                  <p className="text-xs text-white/50">Fill in teacher-specific information.</p>
+                  <p className="text-xs text-white/50">Optional. Fill in teacher-specific information when available.</p>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -525,51 +559,47 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
           )}
         </div>
 
-        {/* Right: Access Control Toggles (1/3 width) */}
-        <div className="col-span-1 bg-black/20 bg-gradient-to-b from-white/10/5
-         to-white/0 rounded-2xl p-5 flex flex-col gap-4 
-          bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 h-full">
-          <div className="flex items-center justify-between gap-2">
-            <div>
-              <h3 className="text-lg font-bold text-gray-100 flex items-center gap-2"><Shield className="lucide lucide-shield w-5 h-5 text-lime-400" /> Access Control</h3>
-              <p className="text-[11px] text-white/50">
-                Choose which modules this user can access.
-              </p>
+        {/* Right: Access Control Toggles (1/3 width) - only for TEACHER, HOD, PRINCIPAL */}
+        {showAccessControl && (
+          <div className="col-span-1 bg-black/20 bg-gradient-to-b from-white/10/5 to-white/0 rounded-2xl p-5 flex flex-col gap-4 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 h-full">
+            <div className="flex items-center justify-between gap-2">
+              <div>
+                <h3 className="text-lg font-bold text-gray-100 flex items-center gap-2"><Shield className="lucide lucide-shield w-5 h-5 text-lime-400" /> Access Control</h3>
+                <p className="text-[11px] text-white/50">
+                  Choose which modules this user can access.
+                </p>
+              </div>
+              <span className="text-[11px] font-medium text-lime-300 px-3 py-1 bg-lime-400/10 text-lime-400 text-xs font-bold rounded-full border border-lime-400/20">
+                {formData.allowedFeatures.length} Active
+              </span>
             </div>
-            <span className="text-[11px] font-medium text-lime-300 px-3 py-1 bg-lime-400/10 text-lime-400
-             text-xs font-bold rounded-full border border-lime-400/20">
-              {formData.allowedFeatures.length} Active
-            </span>
+
+            <AllowedFeatureToggle
+              label="Select All"
+              checked={formData.allowedFeatures.length === AVAILABLE_FEATURES.length}
+              onChange={() => {
+                const allSelected = formData.allowedFeatures.length === AVAILABLE_FEATURES.length;
+                setFormData((prev) => ({
+                  ...prev,
+                  allowedFeatures: allSelected ? [] : AVAILABLE_FEATURES.map((f) => f.key),
+                }));
+              }}
+            />
+
+            <div className="lg:col-span-1" />
+
+            <div className="space-y-4 overflow-y-auto pr-2 no-scrollbar">
+              {AVAILABLE_FEATURES.map((feature) => (
+                <AllowedFeatureToggle
+                  key={feature.key}
+                  label={feature.label}
+                  checked={formData.allowedFeatures.includes(feature.key)}
+                  onChange={() => handleFeatureToggle(feature.key)}
+                />
+              ))}
+            </div>
           </div>
-
-          {/* Select All */}
-          <AllowedFeatureToggle
-            label="Select All"
-            checked={formData.allowedFeatures.length === AVAILABLE_FEATURES_FOR_TEACHERS.length}
-            onChange={() => {
-              const allSelected = formData.allowedFeatures.length === AVAILABLE_FEATURES_FOR_TEACHERS.length;
-              setFormData((prev) => ({
-                ...prev,
-                allowedFeatures: allSelected
-                  ? []
-                  : AVAILABLE_FEATURES_FOR_TEACHERS.map((f) => f.key),
-              }));
-            }}
-          />
-
-          <div className="lg:col-span-1" />
-
-          <div className="space-y-4 overflow-y-auto pr-2 no-scrollbar">
-            {AVAILABLE_FEATURES_FOR_TEACHERS.map((feature) => (
-              <AllowedFeatureToggle
-                key={feature.key}
-                label={feature.label}
-                checked={formData.allowedFeatures.includes(feature.key)}
-                onChange={() => handleFeatureToggle(feature.key)}
-              />
-            ))}
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Error Message */}

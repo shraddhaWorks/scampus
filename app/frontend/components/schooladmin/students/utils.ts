@@ -31,4 +31,5 @@ export const toStudentForm = (student: StudentRow): StudentFormState => ({
   aadhaarNo: student.aadhaarNo || "",
   totalFee: "",
   discountPercent: "",
+  department: (student as { department?: string | null }).department ?? "",
 });

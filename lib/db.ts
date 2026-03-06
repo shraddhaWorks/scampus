@@ -20,8 +20,8 @@ function withParam(url: string, key: string, value: string) {
 let connectionString = base || "";
 if (connectionString) {
   connectionString = withParam(connectionString, "statement_timeout", "120000");
-  connectionString = withParam(connectionString, "connection_limit", "3");
-  connectionString = withParam(connectionString, "pool_timeout", "20");
+  connectionString = withParam(connectionString, "connection_limit", "12");
+  connectionString = withParam(connectionString, "pool_timeout", "60");
   connectionString = withParam(connectionString, "connect_timeout", "15");
 }
 

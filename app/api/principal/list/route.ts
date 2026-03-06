@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
 import { redis } from "@/lib/redis";
-import { Role } from "@/app/generated/prisma";
+import { Role } from "@prisma/client";
 
 export async function GET() {
   try {
@@ -41,13 +41,8 @@ export async function GET() {
 
     const cacheKey = `principal:${schoolId}`;
     const cachedPrincipal = await redis.get(cacheKey);
-
     if (cachedPrincipal) {
-      console.log("✅ Principal served from Redis");
-      return NextResponse.json(
-        { principal: cachedPrincipal },
-        { status: 200 }
-      );
+      return NextResponse.json({ principal: cachedPrincipal }, { status: 200 });
     }
 
     // 🔍 Find principal
@@ -62,8 +57,10 @@ export async function GET() {
         email: true,
         mobile: true,
         role: true,
+        allowedFeatures: true,
+        department: true,
       },
-    });
+    } as Parameters<typeof prisma.user.findFirst>[0]);
 
     if (!principal) {
       return NextResponse.json(
@@ -72,7 +69,7 @@ export async function GET() {
       );
     }
 
-    await redis.set(cacheKey, principal, { ex: 60 * 5 }); // 5 mins cache
+    await redis.set(cacheKey, principal, { ex: 60 * 5 });
 
     return NextResponse.json({ principal }, { status: 200 });
   } catch (error: any) {
@@ -135,7 +132,6 @@ export async function PUT(req: Request) {
       },
     });
 
-    // 🔄 Clear cache
     await redis.del(`principal:${schoolId}`);
 
     return NextResponse.json(

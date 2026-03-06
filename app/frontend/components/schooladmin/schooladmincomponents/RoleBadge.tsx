@@ -15,6 +15,20 @@ const ROLE_CONFIG: Record<
     border: "border-purple-400/30",
   },
 
+  PRINCIPAL: {
+    label: "Principal",
+    bg: "bg-amber-400/15",
+    text: "text-amber-400",
+    border: "border-amber-400/40",
+  },
+
+  HOD: {
+    label: "HOD",
+    bg: "bg-cyan-400/15",
+    text: "text-cyan-400",
+    border: "border-cyan-400/40",
+  },
+
   TEACHER: {
     label: "Teacher",
     bg: "bg-indigo-500/15",

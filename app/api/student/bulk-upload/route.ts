@@ -78,6 +78,7 @@ export async function POST(req: Request) {
           const phoneNo = String(row.phoneNo).replace(/\.0$/, "").trim();
           const aadhaarNo = String(row.aadhaarNo).replace(/\.0$/, "").trim();
           const address = row.address ? String(row.address).trim() : null;
+          const department = row.department ? String(row.department).trim() : null;
 
           const totalFee = Number(row.totalFee);
           const discountPercent = Number(row.discountPercent || 0);
@@ -124,7 +125,7 @@ export async function POST(req: Request) {
               email: `${admissionNumber.replaceAll("/", "")}@${String(settings.admissionPrefix).toLowerCase()}.in`,
               password: hashedPassword,
               role: Role.STUDENT,
-              schoolId,
+              ...(schoolId ? { school: { connect: { id: schoolId } } } : {}),
             },
           });
 
@@ -140,6 +141,7 @@ export async function POST(req: Request) {
               aadhaarNo,
               phoneNo,
               classId: null,
+              department: department || null,
             },
           });
 

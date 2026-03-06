@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import AppLayout from "../../AppLayout";
 import { SCHOOLADMIN_MENU_ITEMS, SCHOOLADMIN_TAB_TITLES } from "../../constants/sidebar";
@@ -22,6 +23,7 @@ import SchoolAdminAnalysisTab from "../../components/schooladmin/Analysis";
 import SchoolAdminSettingsTab from "../../components/schooladmin/Settings";
 import SchoolAdminTeacherTab from "../../components/schooladmin/TeachersTab";
 import SchoolAdminCircularsTab from "../../components/schooladmin/circularTab";
+import PrincipalCreate from "../../components/schooladmin/PrincipalCreate";
 
 function SchoolAdminContent() {
   const tab = useSearchParams().get("tab") ?? "dashboard";
@@ -38,6 +40,13 @@ function SchoolAdminContent() {
     name: "School Admin",
     subtitle: "School Admin",
   });
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  const { data: session } = useSession();
+  useEffect(() => {
+    const role = (session?.user as { role?: string })?.role ?? null;
+    setUserRole(role);
+  }, [session?.user]);
 
   useEffect(() => {
     let cancelled = false;
@@ -48,9 +57,11 @@ function SchoolAdminContent() {
         if (cancelled || !res.ok) return;
         const u = data.user;
         if (u) {
+          const role = (u.role as string) || userRole;
+          const subtitle = role === "PRINCIPAL" ? "Principal" : "School Admin";
           setProfile({
-            name: u.name ?? "School Admin",
-            subtitle: "School Admin",
+            name: u.name ?? (role === "PRINCIPAL" ? "Principal" : "School Admin"),
+            subtitle,
             image: u.photoUrl ?? null,
             email: u.email ?? undefined,
             phone: u.mobile ?? undefined,
@@ -65,7 +76,7 @@ function SchoolAdminContent() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [userRole]);
 
   const renderComponent = () => {
     switch (tab) {
@@ -74,7 +85,9 @@ function SchoolAdminContent() {
       case "students":
         return <SchoolAdminStudentsTab />;
       case "add-user":
-        return <AddUser />
+        return <AddUser />;
+      case "principal":
+        return <PrincipalCreate />;
       case "classes":
         return <SchoolAdminClassesTab />;
       case "student-details":

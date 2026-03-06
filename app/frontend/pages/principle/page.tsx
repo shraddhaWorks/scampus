@@ -1,120 +1,43 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import AppLayout from "../../AppLayout";
-import { PRINCIPAL_MENU_ITEMS } from "../../constants/sidebar";
+import { PRINCIPAL_MENU_ITEMS, PRINCIPAL_TAB_TITLES } from "../../constants/sidebar";
 import RequiredRoles from "../../auth/RequiredRoles";
-import RequireFeature from "../../auth/RequireFeature";
-import Dashboard from "../../components/principle/dashboard";
+import SchoolAdminStudentsTab from "../../components/schooladmin/Students";
+import SchoolAdminClassesTab from "../../components/schooladmin/Classes";
+import SchoolTeacherLeavesTab from "../../components/schooladmin/TeacherLeaves";
+import NewsFeed from "../../components/schooladmin/Newsfeed";
+import WorkshopsAndEventsTab from "../../components/schooladmin/workshopsandevents";
+import TeacherAuditTab from "../../components/schooladmin/TeacherAudit";
+import AddUser from "../../components/schooladmin/AddUser";
+import SchoolAdminFeesTab from "../../components/schooladmin/Fees";
+import SchoolAdminDashboard from "../../components/schooladmin/dashboard/page";
+import StudentDetails from "../../components/schooladmin/StudentDetails";
+import Certificates from "../../components/schooladmin/Certificates";
+import ExamsPage from "../../components/schooladmin/exams/exams";
+import SchoolAdminAnalysisTab from "../../components/schooladmin/Analysis";
+import SchoolAdminSettingsTab from "../../components/schooladmin/Settings";
+import SchoolAdminTeacherTab from "../../components/schooladmin/TeachersTab";
+import SchoolAdminCircularsTab from "../../components/schooladmin/circularTab";
 import AddHod from "../../components/principle/addHod";
-import AddUser from "../../components/principle/addUser";
-import Analysis from "../../components/principle/analysis";
-import BusBooking from "../../components/principle/busBooking";
-import Certificates from "../../components/principle/certificates";
-import Circular from "../../components/principle/circular";
-import ExamSyllubus from "../../components/principle/examSyllubus";
-import Fees from "../../components/principle/fees";
-import HodLeaves from "../../components/principle/hodLeaves";
-import HostelBooking from "../../components/principle/hostelBooking";
-import Library from "../../components/principle/library";
-import Marks from "../../components/principle/marks";
-import NewsFeed from "../../components/principle/newsFeed";
-import RoomAllocation from "../../components/principle/roomAllocation";
-import StudentDetails from "../../components/principle/studentDetails";
-import TeacherAttendennce from "../../components/principle/teacherAttendennce";
-import TeacherAudit from "../../components/principle/teacherAudit";
-import TimeTable from "../../components/principle/timeTable";
-import WorkShops from "../../components/principle/workShops";
-import Settings from "../../components/principle/settings";
 
-const PRINCIPAL_TAB_TITLES = {
-  dashboard: "Dashboard",
-  addHod: "Add HOD",
-  addUser: "Add User",
-  analysis: "Analysis",
-  busBooking: "Bus Booking",
-  certificates: "Certificates",
-  circular: "Circulars",
-  examSyllubus: "Exam Syllabus",
-  fees: "Fees",
-  hodLeaves: "HOD Leaves",
-  hostelBooking: "Hostel Booking",
-  library: "Library",
-  marks: "Marks",
-  newsFeed: "News Feed",
-  roomAllocation: "Room Allocation",
-  studentDetails: "Student Details",
-  teacherAttendennce: "Teacher Attendance",
-  teacherAudit: "Teacher Audit",
-  timeTable: "Time Table",
-  workShops: "Workshops",
-  settings: "Settings",
-};
-
-function PrincipalDashboardInner() {
-  const { data: session } = useSession();
+function PrincipalContent() {
   const tab = useSearchParams().get("tab") ?? "dashboard";
-  const title = (PRINCIPAL_TAB_TITLES as any)[tab] ?? tab.toUpperCase();
-  const [profile, setProfile] = useState({
-    name: session?.user?.name ?? "Principal",
+  const title = PRINCIPAL_TAB_TITLES[tab] ?? tab.toUpperCase();
+  const [profile, setProfile] = useState<{
+    name: string;
+    subtitle?: string;
+    image?: string | null;
+    email?: string;
+    phone?: string;
+    address?: string;
+    userId?: string;
+  }>({
+    name: "Principal",
     subtitle: "Principal",
-    image: null as string | null,
-    email: undefined as string | undefined,
-    phone: undefined as string | undefined,
-    address: undefined as string | undefined,
-    userId: undefined as string | undefined,
   });
-
-  const renderTabContent = () => {
-    switch (tab) {
-      case "dashboard":
-        return <Dashboard />;
-      case "addHod":
-        return <AddHod />;
-      case "addUser":
-        return <AddUser />;
-      case "analysis":
-        return <Analysis />;
-      case "busBooking":
-        return <BusBooking />;
-      case "certificates":
-        return <Certificates />;
-      case "circular":
-        return <Circular />;
-      case "examSyllubus":
-        return <ExamSyllubus />;
-      case "fees":
-        return <Fees />;
-      case "hodLeaves":
-        return <HodLeaves />;
-      case "hostelBooking":
-        return <HostelBooking />;
-      case "library":
-        return <Library />;
-      case "marks":
-        return <Marks />;
-      case "newsFeed":
-        return <NewsFeed />;
-      case "roomAllocation":
-        return <RoomAllocation />;
-      case "studentDetails":
-        return <StudentDetails />;
-      case "teacherAttendennce":
-        return <TeacherAttendennce />;
-      case "teacherAudit":
-        return <TeacherAudit />;
-      case "timeTable":
-        return <TimeTable />;
-      case "workShops":
-        return <WorkShops />;
-      case "settings":
-        return <Settings />;
-      default:
-        return <div>Unknown Tab</div>;
-    }
-  };
 
   useEffect(() => {
     let cancelled = false;
@@ -136,33 +59,72 @@ function PrincipalDashboardInner() {
           });
         }
       } catch {
-        // keep session-based default
+        // keep default
       }
     })();
     return () => {
       cancelled = true;
     };
-  }, [session?.user?.name]);
+  }, []);
+
+  const renderComponent = () => {
+    switch (tab) {
+      case "dashboard":
+        return <SchoolAdminDashboard />;
+      case "students":
+        return <SchoolAdminStudentsTab />;
+      case "add-user":
+        return <AddUser />;
+      case "add-hod":
+        return <AddHod />;
+      case "classes":
+        return <SchoolAdminClassesTab />;
+      case "student-details":
+        return <StudentDetails />;
+      case "teachers":
+        return <SchoolAdminTeacherTab />;
+      case "teacher-leaves":
+        return <SchoolTeacherLeavesTab />;
+      case "teacher-audit":
+        return <TeacherAuditTab />;
+      case "workshops":
+        return <WorkshopsAndEventsTab />;
+      case "newsfeed":
+        return <NewsFeed />;
+      case "circulars":
+        return <SchoolAdminCircularsTab />;
+      case "certificates":
+        return <Certificates />;
+      case "exams":
+        return <ExamsPage />;
+      case "analysis":
+        return <SchoolAdminAnalysisTab />;
+      case "fees":
+        return <SchoolAdminFeesTab />;
+      case "settings":
+        return <SchoolAdminSettingsTab />;
+      default:
+        return <div>Not found</div>;
+    }
+  };
 
   return (
     <RequiredRoles allowedRoles={["PRINCIPAL"]}>
-      <RequireFeature requiredFeature={tab}>
-        <AppLayout
-          activeTab={tab}
-          title={title}
-          menuItems={PRINCIPAL_MENU_ITEMS}
-          profile={profile}
-          children={renderTabContent()}
-        />
-      </RequireFeature>
+      <AppLayout
+        activeTab={tab}
+        title={title}
+        menuItems={PRINCIPAL_MENU_ITEMS}
+        profile={profile}
+        children={renderComponent()}
+      />
     </RequiredRoles>
   );
 }
 
-export default function PrincipalDashboardContent() {
+export default function PrincipalPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-white/70">Loading…</div>}>
-      <PrincipalDashboardInner />
+    <Suspense fallback={<div className="flex min-h-[40vh] items-center justify-center text-white/70">Loading...</div>}>
+      <PrincipalContent />
     </Suspense>
   );
 }

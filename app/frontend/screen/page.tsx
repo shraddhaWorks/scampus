@@ -27,6 +27,8 @@ export default function ScreenPage() {
             const roleRoutes: Record<string, string> = {
                 SUPERADMIN: ROUTES.SUPERADMIN,
                 SCHOOLADMIN: ROUTES.SCHOOLADMIN,
+                PRINCIPAL: ROUTES.PRINCIPAL,
+                HOD: ROUTES.HOD,
                 STUDENT: ROUTES.PARENT,
                 TEACHER: ROUTES.TEACHER,
             };

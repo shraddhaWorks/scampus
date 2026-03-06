@@ -140,6 +140,7 @@ export async function GET(_req: Request, context: RouteParams) {
         fatherPhone: student.phoneNo ?? "",
         previousSchool: student.previousSchool ?? "",
         // status isn’t stored on the model yet; show Active by default
+        department: (student as { department?: string | null }).department ?? null,
         status: "Active",
         class: student.class
           ? {
@@ -233,6 +234,7 @@ export async function PUT(req: Request, context: RouteParams) {
     const address = typeof body.address === "string" ? body.address.trim() || null : undefined;
     const gender = typeof body.gender === "string" ? body.gender.trim() || null : undefined;
     const previousSchool = typeof body.previousSchool === "string" ? body.previousSchool.trim() || null : undefined;
+    const department = typeof body.department === "string" ? body.department.trim() || null : undefined;
 
     if (name !== undefined && name.length < 2) {
       return NextResponse.json({ message: "Name must be at least 2 characters" }, { status: 400 });
@@ -259,6 +261,7 @@ export async function PUT(req: Request, context: RouteParams) {
     if (address !== undefined) studentUpdate.address = address;
     if (gender !== undefined) studentUpdate.gender = gender;
     if (previousSchool !== undefined) studentUpdate.previousSchool = previousSchool;
+    if (department !== undefined) studentUpdate.department = department;
 
     if (Object.keys(userUpdate).length > 0 && student.user) {
       await prisma.user.update({

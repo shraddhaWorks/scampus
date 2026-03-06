@@ -55,6 +55,7 @@ export async function GET() {
         teacherId: true,
         subject: true,
         photoUrl: true,
+        department: true,
       },
       orderBy: {
         name: "asc",

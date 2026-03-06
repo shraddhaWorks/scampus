@@ -48,6 +48,7 @@ export async function GET(req: Request) {
           photoUrl: true,
           subject: true,
           allowedFeatures: true,
+          department: true,
         },
       }),
       prisma.user.count({ where }),

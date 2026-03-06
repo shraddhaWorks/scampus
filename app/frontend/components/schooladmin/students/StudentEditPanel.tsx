@@ -62,7 +62,7 @@ export default function StudentEditPanel({
         />
       </div>
 
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-[1fr_1fr_1.4fr] gap-4 items-end">
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-4 items-end">
         <SelectInput
           label="Class"
           value={form.classId}
@@ -74,6 +74,12 @@ export default function StudentEditPanel({
           value={form.section}
           onChange={(value) => onFieldChange("section", value)}
           options={sectionOptions}
+        />
+        <InputField
+          label="Department"
+          value={form.department}
+          onChange={(value) => onFieldChange("department", value)}
+          placeholder="e.g. Mathematics, Science"
         />
         <button
           onClick={onSave}

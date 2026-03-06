@@ -3,6 +3,16 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../../../lib/authOptions";
 import prisma from "../../../../lib/db";
 import bcrypt from "bcryptjs";
+import { FEATURE_IDS } from "../../../../lib/features";
+
+/** Who can create which role: schooladmin add-user -> Teacher only; principal -> hods, teachers; hods -> teachers; teacher -> students */
+const ALLOWED_CREATOR_ROLES: Record<string, string[]> = {
+  SCHOOLADMIN: ["TEACHER"],
+  SUPERADMIN: ["PRINCIPAL", "HOD", "TEACHER", "STUDENT"],
+  PRINCIPAL: ["HOD", "TEACHER"],
+  HOD: ["TEACHER"],
+  TEACHER: ["STUDENT"],
+};
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,12 +28,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check if user has permission to create users
-    const requesterRole = session.user.role as string;
-    const isAdmin = ["SCHOOLADMIN", "SUPERADMIN"].includes(requesterRole);
-    const isTeacher = requesterRole === "TEACHER";
-
-    if (!isAdmin && !isTeacher) {
+    const requesterRole = (session.user.role as string).toUpperCase();
+    const allowedRoles = ALLOWED_CREATOR_ROLES[requesterRole];
+    if (!allowedRoles || allowedRoles.length === 0) {
       return NextResponse.json(
         { message: "You do not have permission to create users" },
         { status: 403 }
@@ -49,6 +56,7 @@ export async function POST(req: NextRequest) {
       teacherStatus,
       mobile,
       address,
+      department,
     } = body;
 
     // Validation
@@ -56,6 +64,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { message: "Missing required fields" },
         { status: 400 }
+      );
+    }
+
+    const requestedRole = (role as string).toUpperCase();
+    if (!allowedRoles.includes(requestedRole)) {
+      return NextResponse.json(
+        { message: `You can only create: ${allowedRoles.join(", ")}` },
+        { status: 403 }
       );
     }
 
@@ -74,37 +90,28 @@ export async function POST(req: NextRequest) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // If requester is a teacher, enforce restrictions
-    let finalRole = role;
-    let finalAllowedFeatures = allowedFeatures || [];
+    let finalAllowedFeatures: string[] = Array.isArray(allowedFeatures) ? allowedFeatures : [];
 
-    if (isTeacher) {
-      // Teachers may only create students
-      const allowedRolesForTeacher = ["STUDENT"];
-      if (!allowedRolesForTeacher.includes(role.toUpperCase())) {
-        return NextResponse.json(
-          { message: "Teachers can only create students" },
-          { status: 403 }
-        );
-      }
+    const validFeatureIds = new Set(FEATURE_IDS as readonly string[]);
 
-      // Ensure allowedFeatures is a subset of teacher's allowedFeatures
-      const teacherFeatures: string[] = (session.user.allowedFeatures as string[]) || [];
-      const invalid = (finalAllowedFeatures || []).filter(
-        (f: string) => !teacherFeatures.includes(f)
+    // Validate allowedFeatures: only feature ids that exist in the app
+    if (finalAllowedFeatures.length > 0) {
+      finalAllowedFeatures = finalAllowedFeatures.filter((f: string) =>
+        validFeatureIds.has(f)
       );
+    }
 
-      if (invalid.length > 0) {
-        return NextResponse.json(
-          { message: "You cannot assign features you don't have permission for", invalid },
-          { status: 403 }
-        );
-      }
-
-      finalRole = role.toUpperCase();
+    // If requester is TEACHER (creating STUDENT), they cannot assign features; STUDENT has no allowedFeatures
+    if (requesterRole === "TEACHER") {
+      finalAllowedFeatures = [];
+    } else if (["PRINCIPAL", "HOD"].includes(requesterRole)) {
+      finalAllowedFeatures = finalAllowedFeatures.filter((f: string) =>
+        validFeatureIds.has(f)
+      );
     }
 
     const schoolId = session.user.schoolId as string;
+    const finalRole = requestedRole;
 
     // Parse joining date (dd-mm-yyyy or ISO)
     let joiningDateParsed: Date | undefined;
@@ -135,9 +142,9 @@ export async function POST(req: NextRequest) {
         email,
         password: hashedPassword,
         role: finalRole,
-        schoolId,
+        ...(schoolId ? { school: { connect: { id: schoolId } } } : {}),
         ...(designation && { subject: designation }),
-        allowedFeatures: finalAllowedFeatures || [],
+        allowedFeatures: finalAllowedFeatures,
         // Teacher fields (only applied when role is TEACHER)
         ...(finalRole === "TEACHER" && {
           teacherId: teacherId && String(teacherId).trim() ? String(teacherId).trim() : null,
@@ -152,6 +159,18 @@ export async function POST(req: NextRequest) {
         }),
       },
     });
+
+    const departmentVal = department && String(department).trim() ? String(department).trim() : null;
+    if (departmentVal && (finalRole === "TEACHER" || finalRole === "HOD" || finalRole === "PRINCIPAL")) {
+      try {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { department: departmentVal } as Parameters<typeof prisma.user.update>[0]["data"],
+        });
+      } catch (_) {
+        // Ignore if Prisma client does not yet have department (run npx prisma generate)
+      }
+    }
 
     // Assign teacher to classes (only for TEACHER role, and classes must belong to same school)
     if (finalRole === "TEACHER" && classIds.length > 0 && schoolId) {

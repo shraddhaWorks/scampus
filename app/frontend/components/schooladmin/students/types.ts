@@ -27,6 +27,7 @@ export type StudentFormState = {
   totalFee: string;
   discountPercent: string;
   address: string;
+  department: string;
 };
 
 export type StudentFormErrors = Partial<Record<keyof StudentFormState, string>>;

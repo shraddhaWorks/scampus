@@ -114,13 +114,14 @@ export async function POST(req: NextRequest) {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create user
+        const sid = session.user.schoolId;
         await prisma.user.create({
           data: {
             name,
             email,
             password: hashedPassword,
             role: role.toUpperCase() as any,
-            schoolId: session.user.schoolId,
+            ...(sid ? { school: { connect: { id: sid } } } : {}),
             ...(designation && { subject: designation }),
             allowedFeatures: [],
           },

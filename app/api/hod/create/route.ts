@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
 import bcrypt from "bcryptjs";
-import { Role } from "@/app/generated/prisma";
+import { Role } from "@prisma/client";
 
 export async function POST(req: Request) {
   try {
@@ -14,6 +14,7 @@ export async function POST(req: Request) {
     }
 
     const schoolId = session.user.schoolId;
+    const requesterRole = session.user.role as string;
 
     if (!schoolId) {
       return NextResponse.json(
@@ -21,7 +22,16 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const { name, email, password, mobile } = await req.json();
+
+    // Only SCHOOLADMIN or PRINCIPAL can create HODs
+    if (requesterRole !== "SCHOOLADMIN" && requesterRole !== "SUPERADMIN" && requesterRole !== "PRINCIPAL") {
+      return NextResponse.json(
+        { message: "Only school admin or principal can create HOD accounts" },
+        { status: 403 }
+      );
+    }
+
+    const { name, email, password, mobile, department } = await req.json();
 
     if (!name || !email || !password) {
       return NextResponse.json(
@@ -31,6 +41,7 @@ export async function POST(req: Request) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const departmentVal = department && String(department).trim() ? String(department).trim() : null;
 
     const teacher = await prisma.user.create({
       data: {
@@ -38,7 +49,7 @@ export async function POST(req: Request) {
         email,
         password: hashedPassword,
         role: Role.HOD,
-        schoolId,
+        ...(schoolId ? { school: { connect: { id: schoolId } } } : {}),
         mobile: mobile || null,
       },
       select: {
@@ -49,6 +60,17 @@ export async function POST(req: Request) {
         role: true,
       },
     });
+
+    if (departmentVal) {
+      try {
+        await prisma.user.update({
+          where: { id: teacher.id },
+          data: { department: departmentVal } as Parameters<typeof prisma.user.update>[0]["data"],
+        });
+      } catch (_) {
+        // Ignore if Prisma client does not yet have department (run npx prisma generate)
+      }
+    }
 
     return NextResponse.json(
       { message: "HOD created successfully", teacher },

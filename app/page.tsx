@@ -13,26 +13,24 @@ export default function Home() {
   const [hasRedirected, setHasRedirected] = useState(false);
 
   useEffect(() => {
-    // Only redirect if we have a confirmed authenticated status with a valid role
-    // Never redirect to /unauthorized from home page
-    if (status === "authenticated" && session?.user?.role && !hasRedirected) {
-      const roleRoutes: Record<string, string> = {
-        SUPERADMIN: ROUTES.SUPERADMIN,
-        SCHOOLADMIN: ROUTES.SCHOOLADMIN,
-        STUDENT: ROUTES.PARENT,
-        TEACHER: ROUTES.TEACHER,
-      };
-      
-      const destination = roleRoutes[session.user.role];
-      
-      // Only redirect if we have a valid destination
-      // If role doesn't match, stay on home page (don't redirect to unauthorized)
-      if (destination) {
-        setHasRedirected(true);
-        router.replace(destination);
-      }
+    if (status !== "authenticated" || !session?.user?.role || hasRedirected) return;
+
+    const roleRoutes: Record<string, string> = {
+      SUPERADMIN: ROUTES.SUPERADMIN,
+      SCHOOLADMIN: ROUTES.SCHOOLADMIN,
+      PRINCIPAL: ROUTES.PRINCIPAL,
+      HOD: ROUTES.HOD,
+      STUDENT: ROUTES.PARENT,
+      TEACHER: ROUTES.TEACHER,
+    };
+    const role = String(session.user.role).toUpperCase();
+    const destination = roleRoutes[role];
+
+    if (destination) {
+      setHasRedirected(true);
+      window.location.href = destination;
     }
-  }, [status, session?.user?.role, router, hasRedirected]);
+  }, [status, session?.user?.role, hasRedirected]);
 
   // Always show login form for unauthenticated users
   // Show loading only while checking session

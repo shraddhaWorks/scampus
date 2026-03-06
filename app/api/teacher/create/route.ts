@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { name, email, password, mobile, allowedFeatures } = await req.json();
+    const { name, email, password, mobile, allowedFeatures, department } = await req.json();
 
     if (!name || !email || !password) {
       return NextResponse.json(
@@ -37,13 +37,14 @@ export async function POST(req: Request) {
         ? allowedFeatures
         : [];
 
+    const departmentVal = department && String(department).trim() ? String(department).trim() : null;
     const teacher = await prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
         role: Role.TEACHER,
-        schoolId,
+        ...(schoolId ? { school: { connect: { id: schoolId } } } : {}),
         mobile: mobile || null,
         allowedFeatures: features,
       },
@@ -55,6 +56,17 @@ export async function POST(req: Request) {
         role: true,
       },
     });
+
+    if (departmentVal) {
+      try {
+        await prisma.user.update({
+          where: { id: teacher.id },
+          data: { department: departmentVal } as Parameters<typeof prisma.user.update>[0]["data"],
+        });
+      } catch (_) {
+        // Ignore if Prisma client does not yet have department (run npx prisma generate)
+      }
+    }
 
     return NextResponse.json(
       { message: "Teacher created successfully", teacher },

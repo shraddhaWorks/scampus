@@ -66,6 +66,7 @@ const DEFAULT_FORM: StudentFormState = {
   aadhaarNo: "",
   totalFee: "",
   discountPercent: "",
+  department: "",
 };
 
 const validateForm = (
@@ -356,6 +357,7 @@ export default function useStudentPage({ classes = [], reload }: Props) {
         rollNo: form.rollNo?.trim() || undefined,
         gender: form.gender?.trim() || undefined,
         previousSchool: form.previousSchool?.trim() || undefined,
+        department: form.department?.trim() || undefined,
       });
 
       const data = await res.json();
@@ -476,6 +478,7 @@ export default function useStudentPage({ classes = [], reload }: Props) {
         address: editForm.address.trim() || undefined,
         gender: editForm.gender.trim() || undefined,
         previousSchool: editForm.previousSchool.trim() || undefined,
+        department: editForm.department?.trim() || undefined,
       });
       const data = await res.json();
       if (!res.ok) {

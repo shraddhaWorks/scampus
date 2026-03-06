@@ -53,8 +53,11 @@ export default function UsersMobileList({
               </div>
             </div>
 
-            <div className="mt-3 flex items-center gap-2">
+            <div className="mt-3 flex items-center gap-2 flex-wrap">
               <RoleBadge role={row.role} />
+              {row.department && (
+                <span className="text-xs text-white/55 px-2 py-0.5 rounded bg-white/5 border border-white/10">{row.department}</span>
+              )}
               <StatusBadge status="active" />
             </div>
 
@@ -66,17 +69,17 @@ export default function UsersMobileList({
               {row.role !== "SCHOOLADMIN" && (
                 <button
                   type="button"
-                  onClick={() => row.role === "TEACHER" && onEdit(row)}
-                  disabled={row.role !== "TEACHER"}
+                  onClick={() => ["TEACHER", "HOD", "PRINCIPAL"].includes(row.role) && onEdit(row)}
+                  disabled={!["TEACHER", "HOD", "PRINCIPAL"].includes(row.role)}
                   className={`p-2 rounded-lg transition-colors ${
-                    row.role === "TEACHER"
+                    ["TEACHER", "HOD", "PRINCIPAL"].includes(row.role)
                       ? "text-white/65 hover:text-white hover:bg-white/10"
                       : "text-white/30 cursor-not-allowed"
                   }`}
                   title={
-                    row.role === "TEACHER"
+                    ["TEACHER", "HOD", "PRINCIPAL"].includes(row.role)
                       ? "Edit user"
-                      : "Editing is available for teachers only"
+                      : "Editing is available for Principal, HOD, and Teacher only"
                   }
                 >
                   <Pencil size={16} />

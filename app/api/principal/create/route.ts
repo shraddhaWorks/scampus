@@ -3,7 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
 import bcrypt from "bcryptjs";
-import { Role } from "@/app/generated/prisma";
+import { Role } from "@prisma/client";
+import { FEATURE_IDS } from "@/lib/features";
 
 export async function POST(req: Request) {
   try {
@@ -14,6 +15,7 @@ export async function POST(req: Request) {
     }
 
     const schoolId = session.user.schoolId;
+    const requesterRole = session.user.role as string;
 
     if (!schoolId) {
       return NextResponse.json(
@@ -21,7 +23,16 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-     const existingPrincipal = await prisma.user.findFirst({
+
+    // Only SCHOOLADMIN can create principals
+    if (requesterRole !== "SCHOOLADMIN" && requesterRole !== "SUPERADMIN") {
+      return NextResponse.json(
+        { message: "Only school admin can create principal accounts" },
+        { status: 403 }
+      );
+    }
+
+    const existingPrincipal = await prisma.user.findFirst({
       where: {
         schoolId,
         role: Role.PRINCIPAL,
@@ -34,7 +45,7 @@ export async function POST(req: Request) {
         { status: 409 } // Conflict
       );
     }
-    const { name, email, password, mobile } = await req.json();
+    const { name, email, password, mobile, department } = await req.json();
 
     if (!name || !email || !password) {
       return NextResponse.json(
@@ -44,15 +55,18 @@ export async function POST(req: Request) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const departmentVal = department && String(department).trim() ? String(department).trim() : null;
 
+    // Principal gets same features as school admin (full access)
     const teacher = await prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
         role: Role.PRINCIPAL,
-        schoolId,
+        ...(schoolId ? { school: { connect: { id: schoolId } } } : {}),
         mobile: mobile || null,
+        allowedFeatures: [...FEATURE_IDS],
       },
       select: {
         id: true,
@@ -62,6 +76,17 @@ export async function POST(req: Request) {
         role: true,
       },
     });
+
+    if (departmentVal) {
+      try {
+        await prisma.user.update({
+          where: { id: teacher.id },
+          data: { department: departmentVal } as Parameters<typeof prisma.user.update>[0]["data"],
+        });
+      } catch (_) {
+        // Ignore if Prisma client does not yet have department (run npx prisma generate)
+      }
+    }
 
     return NextResponse.json(
       { message: "Principal created successfully", teacher },

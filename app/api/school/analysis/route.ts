@@ -12,7 +12,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const isAdmin = session.user.role === "SCHOOLADMIN" || session.user.role === "SUPERADMIN";
+  const isAdmin = session.user.role === "SCHOOLADMIN" || session.user.role === "PRINCIPAL";
   if (!isAdmin) {
     return NextResponse.json(
       { message: "Only admins can view analysis" },

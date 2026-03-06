@@ -7,7 +7,8 @@ export interface IUser {
   username?: string;
   designation?: string;
   allowedFeatures?: string[];
-   photoUrl?: string | null;
+  photoUrl?: string | null;
+  department?: string | null;
 }
 
 export interface TableColumn {

@@ -89,6 +89,7 @@ model User {
   joiningDate     DateTime?    @db.Date
   teacherStatus   String?      @default("Active") // Active, Inactive
   address         String?      @db.Text
+  department      String?      // Department (for HOD, Teacher)
   leaveAprrover   Boolean      @default(false)
   assignedClasses Class[]      @relation("TeacherClass")
   attendances     Attendance[] @relation("TeacherAttendance")
@@ -139,6 +140,8 @@ model User {
 
   teacherSchools School[] @relation("SchoolTeacher")
 
+  roomTeacherAssignments RoomTeacherAssignment[] @relation("RoomTeacherAssignmentTeacher")
+  libraryIssuesIssued     LibraryIssue[]         @relation("LibraryIssuer")
 }
 
 model Notification {
@@ -240,6 +243,12 @@ model School {
   settings           SchoolSettings?
   classFeeStructures ClassFeeStructure[]
   extraFees          ExtraFee[]
+  buses              Bus[]
+  busBookings        BusBooking[]
+  hostels            Hostel[]
+  cotBookings        CotBooking[]
+  roomAllocations    RoomAllocation[]
+  libraryIssues      LibraryIssue[]
 }
 
 model SchoolSettings {
@@ -327,6 +336,8 @@ model Class {
   examTerms         ExamTerm[]
   feeStructure      ClassFeeStructure?
   circularsTargeted Circular[] @relation("CircularTargetClass")
+  timetables        Timetable[]
+  classRooms        ClassRoom[]
 
   createdAt DateTime @default(now())
 }
@@ -423,6 +434,7 @@ model Student {
   dob             DateTime
   address         String?
   gender          String?
+  department      String?  // Department student belongs to
   previousSchool  String?  @db.Text
 
   // Relations
@@ -434,6 +446,10 @@ model Student {
   transferCertificates TransferCertificate[]
   appointments         Appointment[]         @relation("StudentAppointments")
   studentLeaveRequests StudentLeaveRequest[]
+  busBookings          BusBooking[]
+  cotBookings          CotBooking[]
+  roomStudentAssignments RoomStudentAssignment[]
+  libraryIssues        LibraryIssue[]
 
   // Payments / Fees
   fee      StudentFee?
@@ -570,6 +586,7 @@ model Event {
   type           String
   level          String
   location       String
+  
   mode           String
   additionalInfo String?   @db.Text
   photo          String? // URL or file path
@@ -1265,7 +1282,7 @@ model RoomTeacherAssignment {
 
   // Teacher
   teacherId String
-  teacher   User   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacher   User   @relation("RoomTeacherAssignmentTeacher", fields: [teacherId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1288,7 +1305,7 @@ model LibraryIssue {
 
   // Issued by (faculty / librarian)
   issuedById String
-  issuedBy   User   @relation(fields: [issuedById], references: [id], onDelete: Cascade)
+  issuedBy   User   @relation("LibraryIssuer", fields: [issuedById], references: [id], onDelete: Cascade)
 
   // School (tenant)
   schoolId String

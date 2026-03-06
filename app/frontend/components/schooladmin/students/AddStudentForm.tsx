@@ -153,6 +153,15 @@ export default function AddStudentForm({
         </div>
         <div>
           <InputField
+            label="Department"
+            value={form.department}
+            onChange={(value) => onFieldChange("department", value)}
+            placeholder="e.g. Mathematics, Science"
+            bgColor="white"
+          />
+        </div>
+        <div>
+          <InputField
             label="Total Fee*"
             value={form.totalFee}
             onChange={(value) => onFieldChange("totalFee", value)}
