@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
+import { redis } from "@/lib/redis";
 
 export async function GET(req: Request) {
   try {
@@ -30,12 +31,19 @@ export async function GET(req: Request) {
     if (originalStudentId) {
       where.originalStudentId = originalStudentId;
     }
+    const cachedKey = `studentHistories:${schoolId}:${originalStudentId || "all"}`;
+    const cachedHistories = await redis.get(cachedKey);
+    if (cachedHistories) {
+      console.log("✅ Student histories served from Redis");
+      return NextResponse.json({ histories: cachedHistories }, { status: 200 });
+    }
     const histories = await prisma.studentHistory.findMany({
       where,
       orderBy: {
         deactivatedAt: "desc",
       },
     });
+    await redis.set(cachedKey,histories,{ex:60 * 5}); // Cache for 5 minutes
 
     return NextResponse.json({ histories }, { status: 200 });
   } catch (error: any) {

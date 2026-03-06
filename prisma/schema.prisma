@@ -998,3 +998,317 @@ model Refund {
   @@index([paymentId])
 }
 
+model Bus {
+  id           String @id @default(cuid())
+  busNumber    String // Bus registration number
+  driverName   String
+  driverNumber String
+  totalSeats   Int
+  time         String // Departure time (e.g., "08:00 AM")
+
+  // Relations
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  routes   BusRoute[]
+  bookings BusBooking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+}
+model BusRoute {
+  id       String @id @default(cuid())
+  location String // Pickup/drop location
+  amount   Float // Amount for this location route
+
+  // Relations
+  busId String
+  bus   Bus    @relation(fields: [busId], references: [id], onDelete: Cascade)
+
+  bookings BusBooking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([busId, location]) // One location per bus, but bus can have multiple locations
+  @@index([busId])
+}
+
+model BusBooking {
+  id         String @id @default(cuid())
+  seatNumber Int // Seat number booked by student
+  amount     Float // Amount paid for this booking
+
+  // Payment details (if payment is done via Razorpay)
+  paymentStatus     String  @default("PENDING") // "PENDING", "PAID", "FAILED"
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  razorpaySignature String?
+
+  // Relations
+  busId String
+  bus   Bus    @relation(fields: [busId], references: [id], onDelete: Cascade)
+
+  routeId String? // Location/route selected
+  route   BusRoute? @relation(fields: [routeId], references: [id], onDelete: SetNull)
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([busId, seatNumber]) // One seat per bus can only be booked once
+  @@index([busId])
+  @@index([studentId])
+  @@index([schoolId])
+  @@index([routeId])
+  @@index([paymentStatus])
+}
+
+// =====================
+// Hostel Booking System
+// =====================
+
+model Hostel {
+  id      String @id @default(cuid())
+  name    String // Hostel name
+  address String // Hostel address
+  gender  String // "MALE", "FEMALE", "UNISEX"
+
+  // Relations
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  rooms Room[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+}
+
+model Room {
+  id         String @id @default(cuid())
+  roomNumber String // Room number/name
+  floor      Int // Floor number
+  cotCount   Int // Number of cots in this room
+  amount     Float // Amount per cot for this room
+
+  // Relations
+  hostelId String
+  hostel   Hostel @relation(fields: [hostelId], references: [id], onDelete: Cascade)
+
+  bookings CotBooking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([hostelId, roomNumber]) // Unique room number per hostel
+  @@index([hostelId])
+}
+
+model CotBooking {
+  id        String @id @default(cuid())
+  cotNumber Int // Cot number in the room (1, 2, 3, etc.)
+  amount    Float // Amount paid for this booking
+
+  // Payment details
+  paymentStatus     String  @default("PENDING") // "PENDING", "PAID", "FAILED"
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  razorpaySignature String?
+
+  // Relations
+  roomId String
+  room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([roomId, cotNumber]) // One cot per room can only be booked once
+  @@index([roomId])
+  @@index([studentId])
+  @@index([schoolId])
+  @@index([paymentStatus])
+}
+
+// =====================
+// Timetable System
+// =====================
+
+model Timetable {
+  id String @id @default(cuid())
+
+  // Class relation
+  classId String
+  class   Class  @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  // Day of week (MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY)
+  day String // "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"
+
+  // Period number (1-8)
+  period Int
+
+  // Type: "SUBJECT", "BREAK", "LUNCH"
+  type String @default("SUBJECT")
+
+  // For SUBJECT type
+  subject     String? // Subject name
+  teacherName String? // Teacher name
+
+  // Optional timing
+  startTime String? // Format: "HH:MM"
+  endTime   String? // Format: "HH:MM"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([classId, day, period]) // One entry per class per day per period
+  @@index([classId])
+  @@index([day])
+}
+
+// =====================
+// Room Allocation System
+// =====================
+
+model RoomAllocation {
+  id String @id @default(cuid())
+
+  // Room details
+  roomName         String // e.g., "Room A", "Lab 1"
+  rows             Int // Number of rows
+  columns          Int // Number of columns
+  studentsPerBench Int    @default(1) // 1 or 2 students per bench
+
+  // School relation
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  // Classes in this room
+  classRooms ClassRoom[]
+
+  // Student assignments
+  studentAssignments RoomStudentAssignment[]
+
+  // Teacher assignments
+  teacherAssignments RoomTeacherAssignment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, roomName])
+  @@index([schoolId])
+}
+
+model ClassRoom {
+  id String @id @default(cuid())
+
+  // Room allocation
+  roomAllocationId String
+  roomAllocation   RoomAllocation @relation(fields: [roomAllocationId], references: [id], onDelete: Cascade)
+
+  // Class
+  classId String
+  class   Class  @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([roomAllocationId, classId])
+  @@index([roomAllocationId])
+  @@index([classId])
+}
+
+model RoomStudentAssignment {
+  id String @id @default(cuid())
+
+  // Room allocation
+  roomAllocationId String
+  roomAllocation   RoomAllocation @relation(fields: [roomAllocationId], references: [id], onDelete: Cascade)
+
+  // Student
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  // Position (1-based indexing)
+  row           Int // Row number (1 to rows)
+  column        Int // Column number (1 to columns)
+  benchPosition Int @default(1) // Position on bench (1 or 2, only if studentsPerBench = 2)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([roomAllocationId, studentId]) // One student per room
+  @@unique([roomAllocationId, row, column, benchPosition]) // One student per position
+  @@index([roomAllocationId])
+  @@index([studentId])
+}
+
+model RoomTeacherAssignment {
+  id String @id @default(cuid())
+
+  // Room allocation
+  roomAllocationId String
+  roomAllocation   RoomAllocation @relation(fields: [roomAllocationId], references: [id], onDelete: Cascade)
+
+  // Teacher
+  teacherId String
+  teacher   User   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([roomAllocationId, teacherId]) // One teacher per room
+  @@index([roomAllocationId])
+  @@index([teacherId])
+}
+
+model LibraryIssue {
+  id String @id @default(cuid())
+
+  // Book details (entered while issuing)
+  bookName   String
+  bookNumber String?
+
+  // Student
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  // Issued by (faculty / librarian)
+  issuedById String
+  issuedBy   User   @relation(fields: [issuedById], references: [id], onDelete: Cascade)
+
+  // School (tenant)
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  issueDate    DateTime  @default(now())
+  expectedDate DateTime
+  returnDate   DateTime?
+
+  finePerDay   Float     @default(0)   // 👈 NEW
+  fineAmount   Float     @default(0)
+  overdueDays  Int        @default(0)   // 👈 NEW
+
+  status String @default("ISSUED")
+  // ISSUED | RETURNED | OVERDUE
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studentId])
+  @@index([schoolId])
+  @@index([status])
+}
