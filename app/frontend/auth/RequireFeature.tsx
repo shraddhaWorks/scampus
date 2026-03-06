@@ -45,7 +45,7 @@ const TAB_TO_FEATURE_MAP: Record<string, FeatureId> = {
   profile: "profile",
 } as const;
 
-const ROLES_WITH_ALL_ACCESS = ["SUPERADMIN", "SCHOOLADMIN"] as const;
+const ROLES_WITH_ALL_ACCESS = ["SUPERADMIN", "SCHOOLADMIN", "PRINCIPAL", "HOD"] as const;
 
 /**
  * Component that protects routes/features by checking if the current user
