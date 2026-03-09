@@ -92,22 +92,22 @@ function SchoolAdminContent() {
         return <SchoolAdminClassesTab />;
       case "student-details":
         return <StudentDetails />;
-      case "teachers":
-        return <SchoolAdminTeacherTab />
-      case "teacher-leaves":
-        return <SchoolTeacherLeavesTab />;
-      case "teacher-audit":
-        return <TeacherAuditTab />;
-      case "workshops":
-        return <WorkshopsAndEventsTab />;
+      // case "teachers":
+      //   return <SchoolAdminTeacherTab />
+      // case "teacher-leaves":
+      //   return <SchoolTeacherLeavesTab />;
+      // case "teacher-audit":
+      //   return <TeacherAuditTab />;
+      // case "workshops":
+      //   return <WorkshopsAndEventsTab />;
       case "newsfeed":
         return <NewsFeed />;
       case "circulars":
         return <SchoolAdminCircularsTab />;
-      case "certificates":
-        return <Certificates />;
-      case "exams":
-        return <ExamsPage />;
+      // case "certificates":
+      //   return <Certificates />;
+      // case "exams":
+      //   return <ExamsPage />;
         
       case "analysis":
         return <SchoolAdminAnalysisTab />;
