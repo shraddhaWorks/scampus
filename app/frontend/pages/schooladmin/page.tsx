@@ -84,8 +84,8 @@ function SchoolAdminContent() {
         return <SchoolAdminDashboard />;
       case "students":
         return <SchoolAdminStudentsTab />;
-      case "add-user":
-        return <AddUser />;
+      // case "add-user":
+      //   return <AddUser />;
       case "principal":
         return <PrincipalCreate />;
       case "classes":
