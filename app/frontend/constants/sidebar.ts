@@ -160,13 +160,13 @@ export const SCHOOLADMIN_MENU_ITEMS: SidebarItem[] = [
     //     icon: Users,
     //     permission: Permission.STUDENTS,
     // },
-    {
-        label: "Add User",
-        tab: "add-user",
-        href: "/frontend/pages/schooladmin?tab=add-user",
-        icon: UserPlus,
-        permission: Permission.NEW_USER,
-    },
+    // {
+    //     label: "Add User",
+    //     tab: "add-user",
+    //     href: "/frontend/pages/schooladmin?tab=add-user",
+    //     icon: UserPlus,
+    //     permission: Permission.NEW_USER,
+    // },
     {
         label: "Principal",
         tab: "principal",
