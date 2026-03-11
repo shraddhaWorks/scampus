@@ -423,9 +423,9 @@ export default function ScheduleExamView({
                         <button
                             type="submit"
                             disabled={submitLoading}
-                            className="flex-1 px-4 py-3 bg-lime-400 hover:bg-lime-500 text-black rounded-xl 
-                            font-bold transition-all shadow-[0_0_15px_rgba(163,230,53,0.3)]
-                             hover:shadow-[0_0_20px_rgba(163,230,53,0.4)] flex items-center justify-center gap-2"
+                            className="flex-1 px-4 py-3 bg-[#F54E02] hover:bg-[#E63F00] text-white rounded-xl 
+                            font-bold transition-all shadow-[0_0_15px_rgba(245,78,2,0.3)]
+                             hover:shadow-[0_0_20px_rgba(245,78,2,0.4)] flex items-center justify-center gap-2"
                         >
                             {submitLoading ? "Saving…" : <><Save size={20} /> Save Exam</>}
                         </button>

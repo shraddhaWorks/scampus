@@ -326,7 +326,7 @@ export default function ParentFeesTab() {
                     onClick={() => setPlan(p)}
                     className={`px-4 py-2.5 sm:py-2 rounded-lg text-sm font-medium transition min-h-[44px] touch-manipulation ${
                       plan === p
-                        ? "bg-lime-500 text-black"
+                        ? "bg-[#F54E02] font-semibold"
                         : "bg-white/5 text-gray-400 hover:bg-white/10"
                     }`}
                   >

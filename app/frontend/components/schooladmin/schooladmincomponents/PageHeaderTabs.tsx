@@ -40,7 +40,7 @@ export default function PageTabs({
 
   return (
     <div className="w-full overflow-x-auto">
-      <div className="flex w-max sm:w-full bg-[#0F172A]/50 p-1 rounded-xl border border-white/10">
+      <div className="flex w-max sm:w-full p-1 rounded-xl border border-white/10">
         {tabs.map((tab) => {
           const isActive = active === tab.value;
 
@@ -58,8 +58,8 @@ export default function PageTabs({
                 transition-all
                 ${
                   isActive
-                    ? "bg-lime-400 text-black shadow-lg"
-                    : "text-white/70 hover:text-white"
+                    ? "bg-[#F54E02] text-white shadow-lg"
+                    : "bg-white text-black shadow-md hover:shadow-lg"
                 }
               `}
             >

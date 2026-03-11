@@ -241,7 +241,7 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
                 <button
                   type="submit"
                   disabled={saving}
-                  className="flex-1 py-2.5 rounded-xl bg-lime-400 text-black font-bold hover:bg-lime-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 py-2.5 rounded-xl bg-[#F54E02] text-white font-bold hover:bg-[#E63F00] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   style={{
                     backgroundColor: EXAM_ACCENT,
                     boxShadow: `0 0 18px ${EXAM_ACCENT_GLOW}`,

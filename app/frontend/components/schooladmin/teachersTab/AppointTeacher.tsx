@@ -269,7 +269,7 @@ export default function AppointTeacher() {
             <button
               onClick={handleAssign}
               disabled={!selectedClassId || !selectedTeacherId || assigning}
-              className="w-full sm:w-auto px-6 py-3 rounded-lg sm:rounded-xl font-semibold flex items-center justify-center gap-2 bg-lime-500 text-black hover:bg-lime-400 disabled:opacity-40 text-sm sm:text-base"
+              className="w-full sm:w-auto px-6 py-3 rounded-lg sm:rounded-xl font-semibold flex items-center justify-center gap-2 bg-[#F54E02] text-white hover:bg-[#E63F00] disabled:opacity-40 text-sm sm:text-base"
             >
               <UserPlus size={18} />
               {assigning

@@ -153,7 +153,7 @@ export default function RequireFeature({ requiredFeature, children }: RequireFea
                 // Navigate back to dashboard tab within the same portal
                 router.push("?tab=dashboard");
               }}
-              className="px-4 py-2 rounded-lg bg-lime-400 text-black font-semibold"
+              className="px-4 py-2 rounded-lg bg-[#F54E02] text-white font-semibold"
             >
               Go to Dashboard
             </button>

@@ -25,7 +25,7 @@ export default function HeaderActionButton({
         transition
         flex-1 sm:flex-none cursor-pointer
         ${primary
-          ? "bg-lime-400 text-black shadow-[0_6px_18px_rgba(163,230,53,0.35)] hover:bg-lime-300"
+          ? "bg-[#F54E02] text-white shadow-[0_6px_18px_rgba(245,78,2,0.35)] hover:bg-[#E63F00]"
           : "border border-white/10 bg-white/10 text-white/80 hover:bg-white/20"}
       `}
     >

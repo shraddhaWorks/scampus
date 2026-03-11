@@ -85,8 +85,8 @@ function ParentAccountCard({
               type="button" 
               onClick={() => fileInputRef?.current?.click()}
               disabled={uploading}
-              className="mt-2 px-4 py-2 bg-[#A3E635]/20 text-[#A3E635] border border-[#A3E635]/30
-               rounded-xl text-sm font-medium hover:bg-[#A3E635]/30 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+              className="mt-2 px-4 py-2 bg-[#F54E02] text-white border border-[#F54E02]
+               rounded-xl text-sm font-medium hover:bg-[#E63F00] transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
               {uploading ? "Uploading..." : "Edit Photo"}
             </button>
           </div>

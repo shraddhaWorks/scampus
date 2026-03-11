@@ -661,7 +661,7 @@ function IconTab({ label, count, icon: Icon, active, onClick }: any) {
 function ActionButton({ label, icon: Icon, color, onClick, full, disabled }: any) {
   const colorMap: any = {
     green:
-      "border-lime-400 text-black bg-lime-400",
+      "border-[#F54E02] text-white bg-[#F54E02]",
     yellow:
       "border-yellow-400 text-black bg-yellow-400",
     red:
@@ -669,7 +669,7 @@ function ActionButton({ label, icon: Icon, color, onClick, full, disabled }: any
   };
   const mobileColorMap: any = {
     green:
-      "border-lime-400  text-lime-400 bg-lime-400/10",
+      "border-[#F54E02]  text-[#F54E02] bg-[#F54E02]/10",
     yellow:
       "border-yellow-400 text-yellow-400 bg-yellow-400/10",
     red:

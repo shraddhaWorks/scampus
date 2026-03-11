@@ -333,7 +333,7 @@ export default function EventDetailsModal({
                           href={event.workshopCertificate.certificateUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-xl bg-lime-400 px-4 py-2.5 text-sm font-semibold text-black hover:bg-lime-300 transition"
+                          className="inline-flex items-center gap-2 rounded-xl bg-[#F54E02] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#E63F00] transition"
                         >
                           <Download size={16} />
                           Download Certificate
@@ -375,7 +375,7 @@ export default function EventDetailsModal({
                           type="button"
                           onClick={handleEnroll}
                           disabled={enrollLoading}
-                          className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-lime-400 px-4 py-3 text-sm font-semibold text-black hover:bg-lime-300 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                          className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#F54E02] px-4 py-3 text-sm font-semibold text-white hover:bg-[#E63F00] transition disabled:opacity-60 disabled:cursor-not-allowed"
                         >
                           {enrollLoading ? (
                             <>

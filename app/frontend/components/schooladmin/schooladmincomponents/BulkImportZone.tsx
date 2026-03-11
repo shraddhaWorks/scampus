@@ -248,8 +248,8 @@ Admin User,admin@school.com,SCHOOLADMIN,Principal,Password123`;
           onClick={handleUpload}
           disabled={!file || uploading || !!result}
           whileHover={{ x: 4 }}
-          className="flex-1 px-4 py-3 rounded-xl bg-lime-400 text-black
-            font-semibold hover:bg-lime-300 disabled:opacity-50 disabled:cursor-not-allowed
+          className="flex-1 px-4 py-3 rounded-xl bg-[#F54E02] text-white
+            font-semibold hover:bg-[#E63F00] disabled:opacity-50 disabled:cursor-not-allowed
             transition flex items-center justify-center gap-2"
         >
           {uploading ? (

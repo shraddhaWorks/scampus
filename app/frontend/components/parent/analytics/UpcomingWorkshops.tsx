@@ -81,7 +81,7 @@ export default function UpcomingWorkshops({ workshops }: UpcomingWorkshopsProps)
                   <p className="flex items-center gap-2 text-sm text-white/60">
                     <UsersRound size={14} className="text-lime-300" /> {w.seatsLabel}
                   </p>
-                  <button className="rounded-full border border-lime-400/35 bg-lime-400/10 px-4 py-1.5 text-sm font-semibold text-lime-300 hover:bg-lime-400/20">
+                  <button className="rounded-full border border-[#F54E02] bg-[#F54E02] px-4 py-1.5 text-sm font-semibold text-white hover:bg-[#E63F00]">
                     Register
                   </button>
                 </div>

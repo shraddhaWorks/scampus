@@ -15,7 +15,7 @@ export default function ChatTabs({ activeTab, onChange }: Props) {
           className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition
             ${
               activeTab === tab
-                ? "bg-lime-500 text-black"
+                ? "bg-[#F54E02] font-semibold"
                 : "bg-white/5 text-gray-400 hover:text-white hover:bg-white/10"
             }`}
         >

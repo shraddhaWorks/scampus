@@ -41,7 +41,7 @@ export default function TeacherStatCard({ avatar, name, code, percentage, stats,
             type="button"
             onClick={() => onStatusChange?.(s.label)}
             className={`h-9 rounded-xl text-xs font-bold transition-all ${
-              s.active ? "bg-lime-400 text-black shadow-[0_0_15px_rgba(163,230,53,0.3)]" : "bg-white/5 text-white/30 hover:bg-white/10"
+              s.active ? "bg-[#F54E02] shadow-[0_0_15px_rgba(245,78,2,0.3)]" : "bg-white/5 text-white/30 hover:bg-white/10"
             }`}
           >
             {s.label}

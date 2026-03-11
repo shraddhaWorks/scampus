@@ -63,7 +63,7 @@ export default function SchoolAdminCircularsTab() {
         rightSlot={
           <button
             onClick={() => setShowForm((prev) => !prev)}
-            className="flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-lime-400 text-black font-semibold hover:bg-lime-300 transition w-full sm:w-auto text-sm sm:text-base shrink-0"
+            className="flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#F54E02] text-white font-semibold hover:bg-[#E63F00] transition w-full sm:w-auto text-sm sm:text-base shrink-0"
           >
             {showForm ? (
               <>

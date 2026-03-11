@@ -147,7 +147,7 @@ function PaymentSuccessContent() {
         <div className="p-6 pt-0 flex flex-col gap-3">
           <Link
             href="/frontend/pages/parent?tab=fees"
-            className="w-full py-3 px-4 rounded-xl font-semibold text-center text-black bg-lime-500 hover:bg-lime-400 transition flex items-center justify-center gap-2"
+            className="w-full py-3 px-4 rounded-xl font-semibold text-center text-white bg-[#F54E02] hover:bg-[#E63F00] transition flex items-center justify-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Fees

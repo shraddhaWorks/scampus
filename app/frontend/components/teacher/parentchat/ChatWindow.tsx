@@ -159,7 +159,7 @@ export default function ChatWindow({
               <>
                 <button
                   onClick={onApprove}
-                  className="px-3 py-2 sm:py-1.5 rounded-full bg-lime-400 text-black text-xs sm:text-sm flex items-center gap-1 touch-manipulation min-h-[44px] sm:min-h-0"
+                  className="px-3 py-2 sm:py-1.5 rounded-full bg-[#F54E02] text-white text-xs sm:text-sm flex items-center gap-1 touch-manipulation min-h-[44px] sm:min-h-0"
                 >
                   <Check size={16} />
                   <span className="hidden sm:inline">Approve</span>

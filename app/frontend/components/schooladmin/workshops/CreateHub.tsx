@@ -330,7 +330,7 @@ export default function CreateHub({ events }: CreateHubProps) {
                       <div
                         className={`h-8 w-8 sm:h-9 sm:w-9 rounded-lg sm:rounded-xl flex items-center justify-center text-sm font-semibold shrink-0 ${
                           isSelected
-                            ? "bg-lime-400 text-black"
+                            ? "bg-[#F54E02]"
                             : "bg-white/10 text-white/50"
                         }`}
                       >
@@ -554,7 +554,7 @@ export default function CreateHub({ events }: CreateHubProps) {
                           }
                           className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition ${
                             nameTextStyle.textAlign === align
-                              ? "bg-lime-400 text-black"
+                              ? "bg-[#F54E02]"
                               : "bg-black/30 border border-white/20 text-white/70 hover:bg-white/10"
                           }`}
                         >
@@ -680,7 +680,7 @@ export default function CreateHub({ events }: CreateHubProps) {
                   type="button"
                   onClick={createTemplateAndAssign}
                   disabled={!canAssign}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-lime-400 px-6 py-3 text-sm font-semibold text-black shadow-lg shadow-lime-400/30 hover:bg-lime-300 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-lime-400 w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#F54E02] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#F54E02]/30 hover:bg-[#E63F00] transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#F54E02] w-full sm:w-auto"
                 >
                   {assigning ? (
                     <>

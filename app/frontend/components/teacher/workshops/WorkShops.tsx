@@ -198,7 +198,7 @@ export default function TeacherWorkshopsTab() {
     const cancelButton = (
       <button
         onClick={effectiveOnClick}
-        className="inline-flex items-center gap-2 rounded-full bg-lime-400 px-5 py-2 text-sm font-semibold text-black shadow-[0_6px_18px_rgba(163,230,53,0.35)] hover:bg-lime-300 transition cursor-pointer"
+        className="inline-flex items-center gap-2 rounded-full bg-[#F54E02] px-5 py-2 text-sm font-semibold text-white shadow-[0_6px_18px_rgba(245,78,2,0.35)] hover:bg-[#E63F00] transition cursor-pointer"
       >
         <X size={16} />
         <span>Cancel</span>
@@ -214,7 +214,7 @@ export default function TeacherWorkshopsTab() {
           ) : (
             <button
               onClick={effectiveOnClick}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-lime-400 px-5 py-2 text-sm font-semibold text-black shadow-[0_6px_18px_rgba(163,230,53,0.35)] hover:bg-lime-300 transition cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#F54E02] px-5 py-2 text-sm font-semibold text-white shadow-[0_6px_18px_rgba(245,78,2,0.35)] hover:bg-[#E63F00] transition cursor-pointer"
             >
               <Icon size={16} />
               <span>{effectiveLabel}</span>

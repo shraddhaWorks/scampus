@@ -200,7 +200,7 @@ const ShowTeacher = ({ teacher, onClose, onEdit }: Props) => {
                             onClose();      // close show modal
                             onEdit(teacher); // open edit modal
                         }}
-                        className="w-1/2 px-6 py-3 rounded-2xl bg-lime-400 text-black font-semibold hover:bg-lime-300 transition flex items-center justify-center gap-2 shadow-lg shadow-lime-400/30"
+                        className="w-1/2 px-6 py-3 rounded-2xl bg-[#F54E02] text-white font-semibold hover:bg-[#E63F00] transition flex items-center justify-center gap-2 shadow-lg shadow-[#F54E02]/30"
                     >
                         <Pencil size={16} />
                         Edit Teacher

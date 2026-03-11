@@ -109,8 +109,8 @@ export default function StudentDetailsModal({ student, onClose, onEdit }: Props)
             </button>
             <button
               onClick={onEdit}
-              className="flex-1 px-4 md:px-6 py-2.5 bg-lime-400 hover:bg-lime-500 text-black rounded-xl font-medium transition-all
-               shadow-[0_0_15px_rgba(163,230,53,0.3)] text-sm flex items-center justify-center gap-2"
+              className="flex-1 px-4 md:px-6 py-2.5 bg-[#F54E02] hover:bg-[#E63F00] text-white rounded-xl font-medium transition-all
+               shadow-[0_0_15px_rgba(245,78,2,0.3)] text-sm flex items-center justify-center gap-2"
             >
               Edit Student
             </button>

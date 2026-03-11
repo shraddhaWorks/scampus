@@ -174,7 +174,7 @@ export default function NewChatModal({ onClose, onSuccess }: Props) {
             type="button"
             onClick={handleSubmit}
             disabled={submitting || loadingTeachers || teachers.length === 0}
-            className="bg-lime-400 text-black font-semibold px-6 py-2 rounded-xl hover:bg-lime-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-[#F54E02] text-white font-semibold px-6 py-2 rounded-xl hover:bg-[#E63F00] transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? "Sending…" : "Send Request"}
           </button>

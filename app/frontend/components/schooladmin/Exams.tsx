@@ -129,8 +129,8 @@ export function ExamsPageInner() {
             <button
               type="button"
               onClick={() => setShowAddModal(true)}
-              className="px-4 py-2 bg-lime-400 hover:bg-lime-500 text-black font-bold rounded-xl
-               shadow-lg shadow-lime-400/20 transition-all flex items-center gap-2 text-sm"
+              className="px-4 py-2 bg-[#F54E02] hover:bg-[#E63F00] text-white font-bold rounded-xl
+               shadow-lg shadow-[#F54E02]/20 transition-all flex items-center gap-2 text-sm"
               style={{
                 backgroundColor: EXAM_ACCENT,
                 boxShadow: `0 0 22px ${EXAM_ACCENT}44`,

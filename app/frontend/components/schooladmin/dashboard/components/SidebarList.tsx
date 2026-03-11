@@ -45,7 +45,7 @@ export const SidebarList = ({
         {subtitle && <p className="text-gray-400 text-sm mt-0.5">{subtitle}</p>}
       </div>
       {showViewAll && (
-        <button onClick={onViewAllClick} className="text-lime-400 text-xs font-bold hover:text-white transition-colors py-2 px-3 min-h-[44px] touch-manipulation -my-1">
+        <button onClick={onViewAllClick} className="bg-[#F54E02] text-white text-xs font-bold hover:bg-[#E63F00] transition-colors py-2 px-3 min-h-[44px] touch-manipulation -my-1 rounded-xl">
           View All
         </button>
       )}

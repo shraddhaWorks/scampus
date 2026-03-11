@@ -28,19 +28,22 @@ export default function PageHeader({
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
+      style={{
+        boxShadow: transparent ? "none" : "0 10px 30px rgba(0, 0, 0, 0.15), 0 -2px 10px rgba(0, 0, 0, 0.1)"
+      }}
       className={`
         rounded-xl sm:rounded-2xl md:rounded-3xl
-        flex flex-col md:flex-row
+        flex flex-col md:flex-row 
         md:items-center md:justify-between gap-2 sm:gap-3 md:gap-4
         ${compact ? "p-3 sm:p-4 md:p-6 mb-3 sm:mb-4 md:mb-6" : "p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8"}
-        ${transparent ? "bg-transparent" : "bg-white/5 backdrop-blur-xl border-b border-white/10"}
+        ${transparent ? "bg-transparent" : "bg-white"}
         ${className}
       `}
     >
       {/* LEFT */}
       <div className={`min-w-0 flex-1 ${center ? "flex flex-col items-center text-center" : ""}`}>
         <h1
-          className={`font-bold text-white flex items-center gap-2 min-w-0 ${
+          className={`font-bold text-black flex items-center gap-2 min-w-0 ${
             compact ? "text-lg sm:text-xl md:text-2xl" : "text-xl sm:text-2xl"
           } ${center ? "justify-center" : ""}`}
         >
@@ -53,7 +56,7 @@ export default function PageHeader({
         </h1>
 
         {subtitle && (
-          <p className={`text-white/60 mt-0.5 sm:mt-1 ${compact ? "text-xs sm:text-sm" : "text-sm"}`}>
+          <p className={`text-gray-600 mt-0.5 sm:mt-1 ${compact ? "text-xs sm:text-sm" : "text-sm"}`}>
             {subtitle}
           </p>
         )}

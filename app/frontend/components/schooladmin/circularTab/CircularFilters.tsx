@@ -60,7 +60,7 @@ export default function CircularFilters({
                   transition-all border
                   ${
                     isActive
-                      ? "bg-lime-400/10 text-lime-400 border-lime-400/30"
+                      ? "bg-[#F54E02] border-[#F54E02] font-semibold"
                       : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10"
                   }
                 `}

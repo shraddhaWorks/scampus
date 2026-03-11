@@ -165,8 +165,8 @@ export function TeacherDashboardContent({
             <button
               type="button"
               onClick={onManageClasses}
-              className="px-8 py-3 bg-lime-400 text-black font-bold rounded-xl hover:bg-lime-500 
-              transition-all shadow-[0_0_20px_rgba(163,230,53,0.3)] flex items-center gap-2"
+              className="px-8 py-3 bg-[#F54E02] text-white font-bold rounded-xl
+              transition-all shadow-[0_0_20px_rgba(245,78,2,0.3)] flex items-center gap-2"
             >
               Manage Classes
               <ArrowRight size={16} />

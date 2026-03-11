@@ -255,13 +255,13 @@ export default function AppHeader({ title, profile, hideSearchAndNotifications =
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/5 backdrop-blur-xl border-b border-white/10">
+      <header className="sticky top-0 z-40 bg-white/5 backdrop-blur-xl border-b border-white/10 shadow-md rounded-lg">
         <div className="flex items-center justify-between px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 md:py-4 gap-2">
 
           {/* LEFT */}
           <div className="min-w-0 flex-1">
             <SectionHeader title={title} />
-            <p className="text-xs pl-1.5 text-white/60 hidden md:block">
+            <p className="text-xs pl-1.5 text-black hidden md:block">
               Welcome back, {displayName.split(" ")[0]}
             </p>
           </div>
@@ -286,10 +286,10 @@ export default function AppHeader({ title, profile, hideSearchAndNotifications =
                   />
                 </div>
                 <button
-                  className="md:hidden p-2 rounded-lg hover:bg-white/10"
+                  className="md:hidden p-2 rounded-lg hover:bg-orange-500 shadow-md transition"
                   onClick={() => setShowSearch(true)}
                 >
-                  <Search className="text-white"/>
+                  <Search className="text-black"/>
                 </button>
               </>
             )}
@@ -301,9 +301,9 @@ export default function AppHeader({ title, profile, hideSearchAndNotifications =
                   setShowNotifications(true);
                   fetchUnreadCount();
                 }}
-                className="relative p-2 rounded-lg hover:bg-white/10"
+                className="relative p-2 rounded-lg hover:bg-orange-500 shadow-md transition"
               >
-                <Bell className="text-white" />
+                <Bell className="text-black" />
                 {unreadCount > 0 && (
                   <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center bg-red-500 text-[10px] font-bold text-white rounded-full">
                     {unreadCount > 99 ? "99+" : unreadCount}
@@ -316,11 +316,11 @@ export default function AppHeader({ title, profile, hideSearchAndNotifications =
             {!isSuperAdminPanel && (
               <button
                 type="button"
-                className="p-2 rounded-lg hover:bg-white/10"
+                className="p-2 rounded-lg hover:bg-orange-500 shadow-md transition"
                 onClick={openSettings}
                 title="Settings"
               >
-                <Settings className="text-white" />
+                <Settings className="text-black" />
               </button>
             )}
 
@@ -330,7 +330,7 @@ export default function AppHeader({ title, profile, hideSearchAndNotifications =
               onClick={() => {
                 setShowProfile(true);
               }}
-              className="p-1 rounded-xl bg-white/5 hover:bg-white/10 flex-shrink-0 transition"
+              className="p-1 rounded-xl bg-gray-100 hover:bg-orange-500 shadow-md flex-shrink-0 transition"
               title="My profile"
             >
               <img
@@ -395,7 +395,7 @@ export default function AppHeader({ title, profile, hideSearchAndNotifications =
                   handleSearchSubmit(searchQuery);
                   setShowSearch(false);
                 }}
-                className="px-4 py-2 bg-lime-400 text-black rounded-lg text-sm font-medium"
+                className="px-4 py-2 bg-[#F54E02] text-white rounded-lg text-sm font-medium"
               >
                 Search
               </button>

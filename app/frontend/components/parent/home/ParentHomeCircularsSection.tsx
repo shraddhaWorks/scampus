@@ -90,8 +90,8 @@ export default function ParentHomeCircularsSection({ circulars }: Props) {
                   onClick={() => setImportance(filter)}
                   className={`h-[38px] sm:h-[42px] px-3 sm:px-4 border rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0 ${
                     active
-                      ? "bg-lime-400/10 text-lime-300 border-lime-400/40"
-                      : "bg-white/5 text-white/60 border-white/15 hover:bg-white/10"
+                      ? " bg-[#F54E02]  text-white "
+                      : "bg-white/5 text-white/70 hover:bg-white/10"
                   }`}
                 >
                   {label}

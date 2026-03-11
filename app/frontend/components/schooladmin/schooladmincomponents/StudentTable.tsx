@@ -83,7 +83,7 @@ export default function StudentTable() {
               </button>
               <button
                 onClick={async () => { await refetch(); setSelected(null); }}
-                className="px-3 py-1 rounded-lg bg-lime-400 text-black font-medium hover:bg-lime-300"
+                className="px-3 py-1 rounded-lg bg-[#F54E02] text-white font-medium hover:bg-[#E63F00]"
               >
                 Refresh
               </button>
