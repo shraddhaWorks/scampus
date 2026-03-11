@@ -14,6 +14,7 @@ import StudentAttendence from "../../components/hod/studentAttendence";
 import AddUser from "../../components/hod/addUser";
 import AddStudents from "../../components/hod/addStudents";
 import TeacherAudit from "../../components/hod/teacherAudit";
+import FacultyLeaves from "../../components/hod/facultyLeaves";
 import Circular from "../../components/hod/circular";
 import ExamAndSyllabus from "../../components/hod/examAndSyllabus";
 import RoomAllocation from "../../components/hod/roomAllocation";
@@ -26,6 +27,7 @@ import Marks from "../../components/hod/marks";
 import Analysis from "../../components/hod/analysis";
 import Settings from "../../components/hod/settings";
 
+
 const HOD_TAB_TITLES = {
   dashboard: "Dashboard",
   classes: "Classes",
@@ -34,6 +36,7 @@ const HOD_TAB_TITLES = {
   addUser: "Add User",
   addStudents: "Add Students",
   teacherAudit: "Teacher Audit",
+  facultyLeaves: "Faculty Leaves",
   circular: "Circulars",
   examAndSyllabus: "Exam Syllabus",
   roomAllocation: "Room Allocation",
@@ -77,6 +80,8 @@ function HodDashboardInner() {
         return <AddStudents />;
       case "teacherAudit":
         return <TeacherAudit />;
+      case "facultyLeaves":
+        return <FacultyLeaves />;  
       case "circular":
         return <Circular />;
       case "examAndSyllabus":
