@@ -147,7 +147,7 @@ export default function EventDetailsModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-4">
-      <div className="w-full max-w-[94vw] sm:max-w-2xl lg:max-w-5xl bg-[#0F172A] border border-gray-400/30 rounded-2xl p-4 sm:p-5 shadow-2xl relative overflow-hidden animate-fadeIn">
+      <div className="w-full max-w-[94vw] sm:max-w-2xl lg:max-w-5xl bg-[#0F172A] border border-gray-500/30/30 rounded-2xl p-4 sm:p-5 shadow-2xl relative overflow-hidden animate-fadeIn">
         <button
           type="button"
           onClick={onClose}
@@ -233,7 +233,7 @@ export default function EventDetailsModal({
                     <div className="text-xs uppercase tracking-wide text-white/50">
                       Instructor
                     </div>
-                  <div className="mt-3 flex items-center gap-3">
+                    <div className="mt-3 flex items-center gap-3">
                       <img
                         src={instructorImage}
                         alt={event?.teacher?.name || "Instructor"}
@@ -272,11 +272,10 @@ export default function EventDetailsModal({
                                 </p>
                               </div>
                               <span
-                                className={`text-xs px-2 py-1 rounded ${
-                                  paid
+                                className={`text-xs px-2 py-1 rounded ${paid
                                     ? "bg-emerald-500/20 text-emerald-400"
                                     : "bg-amber-500/20 text-amber-400"
-                                }`}
+                                  }`}
                               >
                                 {paid ? "Paid" : "Pending"}
                               </span>

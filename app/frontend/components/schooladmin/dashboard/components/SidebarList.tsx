@@ -36,9 +36,9 @@ export const SidebarList = ({
   items: ListItemProps[];
   subtitle?: string;
   showViewAll?: boolean;
-  onViewAllClick?:()=>void
+  onViewAllClick?: () => void
 }) => (
-  <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-2xl p-4 sm:p-6 md:p-8">
+  <div className="bg-white/5 backdrop-blur-xl border border-gray-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-md">
     <div className="flex justify-between items-start gap-4 mb-4 sm:mb-6">
       <div>
         <h3 className="font-bold text-xl text-white">{title}</h3>
@@ -67,13 +67,12 @@ export const SidebarList = ({
             </div>
           </div>
           {item.status && (
-            <span className={`text-[10px] font-bold px-2.5 py-1 rounded-lg flex-shrink-0 ${
-              item.status === "Approved" || item.status === "Confirmed"
+            <span className={`text-[10px] font-bold px-2.5 py-1 rounded-lg flex-shrink-0 ${item.status === "Approved" || item.status === "Confirmed"
                 ? "bg-lime-400/20 text-lime-400"
                 : item.status === "Pending"
                   ? "bg-amber-400/20 text-amber-400"
                   : "bg-white/10 text-white/70"
-            }`}>
+              }`}>
               {item.status}
             </span>
           )}

@@ -59,8 +59,8 @@ export default function DeleteConfirmation({
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         className="fixed inset-0 flex items-center justify-center z-50 p-4"
                     >
-                        <div className="bg-[#0F172A] rounded-2xl shadow-2xl max-w-md w-full border
-                            border-white/10 p-6 animate-scaleIn">
+                        <div className="bg-white rounded-2xl shadow-md max-w-md w-full border
+                            border-gray-500/30 p-6 animate-scaleIn">
 
                             {/* Header */}
 
@@ -68,24 +68,24 @@ export default function DeleteConfirmation({
                             <div className="w-12 h-12 rounded-full bg-red-400/10 flex items-center justify-center mb-4 mx-auto">
                                 <Trash size={20} className="text-red-400" />
                             </div>
-                            <h3 className="text-lg font-semibold text-white text-center">{title}</h3>
+                            <h3 className="text-lg font-semibold text-black text-center">{title}</h3>
 
 
                             {/* Content */}
                             <div className="px-6 py-4 space-y-4">
-                                <p className="text-gray-400 text-center text-sm mb-2">
+                                <p className="text-black/70 text-center text-sm mb-2">
                                     {message ?? (
                                         <>
                                             Do you really want to delete{" "}
-                                            <span className="text-white font-semibold">{userName ?? "this item"}</span>?
+                                            <span className="text-black font-semibold">{userName ?? "this item"}</span>?
                                         </>
                                     )}
                                 </p>
-                                <p className="text-sm text-amber-400/90 text-center font-medium">
+                                <p className="text-sm text-black/80 text-center font-medium">
                                     This action cannot be undone.
                                 </p>
                                 {!message && (
-                                    <p className="text-sm text-white/60 text-center">
+                                    <p className="text-sm text-black/60 text-center">
                                         All associated data will be removed from the system.
                                     </p>
                                 )}
@@ -103,13 +103,13 @@ export default function DeleteConfirmation({
                             </div>
 
                             {/* Actions */}
-                            <div className="flex gap-3 px-6 py-4 border-t border-white/10">
+                            <div className="flex gap-3 px-6 py-4 border-t border-gray-500/30">
                                 <motion.button
                                     whileHover={{ x: -4 }}
                                     onClick={onCancel}
                                     disabled={deleting}
-                                    className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 text-gray-300
-                                      font-medium rounded-xl transition-all border border-white/10"
+                                    className="flex-1 py-2.5 bg-white hover:bg-gray-50 text-black
+                                      font-medium rounded-xl transition-all border border-gray-500/30 shadow-md"
                                 >
                                     {cancelLabel}
                                 </motion.button>
@@ -118,7 +118,7 @@ export default function DeleteConfirmation({
                                     onClick={handleConfirm}
                                     disabled={deleting}
                                     className="flex-1 py-2.5 bg-red-500 hover:bg-red-600 text-white
-                                     font-bold rounded-xl shadow-lg shadow-red-500/20 transition-all"
+                                     font-bold rounded-xl shadow-md border border-gray-500/30 transition-all"
                                 >
                                     {deleting ? (
                                         <>

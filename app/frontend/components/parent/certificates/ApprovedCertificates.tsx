@@ -49,7 +49,7 @@ const CertificateCard = ({ data }: any) => {
             THIS IS TO CERTIFY THAT
           </p>
 
-          <h2 className="text-2xl font-bold text-[#1E293B] border-b border-gray-400 pb-2 px-6">
+          <h2 className="text-2xl font-bold text-[#1E293B] border-b border-gray-500/30 pb-2 px-6">
             {data.name}
           </h2>
 
@@ -76,14 +76,14 @@ const CertificateCard = ({ data }: any) => {
 
           <div className="flex justify-between items-center pt-6">
             <div className="text-center">
-              <div className="border-t border-gray-400 w-28 mx-auto mb-1"></div>
+              <div className="border-t border-gray-500/30 w-28 mx-auto mb-1"></div>
               <p className="text-xs tracking-wide">SIGNATURE</p>
             </div>
 
             <Stamp className="w-8 h-8 text-red-600" />
 
             <div className="text-center">
-              <div className="border-t border-gray-400 w-28 mx-auto mb-1"></div>
+              <div className="border-t border-gray-500/30 w-28 mx-auto mb-1"></div>
               <p className="text-xs tracking-wide">DIRECTOR</p>
             </div>
           </div>
@@ -140,7 +140,7 @@ const ApprovedCertificates = ({ certificates = [] }: { certificates?: Certificat
 
   return (
     <div className="bg-[rgba(255,255,255,0.05)] backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg overflow-hidden">
-      
+
       {/* Header */}
       <div className="px-6 py-4 border-b border-white/5 bg-white/5 flex justify-between items-center">
         <div>

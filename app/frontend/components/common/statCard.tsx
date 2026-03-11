@@ -30,28 +30,33 @@ export default function StatCard({
   variant = "default",
 }: StatCardProps) {
   const isCentered = variant === "gradientCentered";
+  const hoverBounce = {
+    y: [0, -10, 0, -5, 0],
+    transition: { duration: 0.55, ease: "easeOut" as const },
+  };
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
+      whileHover={hoverBounce}
       className={`
         relative overflow-hidden
         rounded-2xl
         p-5
         transition-all duration-300
-        border
+        border border-gray-500/30
+        shadow-md
         group
         ${
           isCentered
-            ? `bg-gradient-to-br  border-white/10 text-white`
-            : `bg-white/5 backdrop-blur-xl border-white/10`
+            ? `bg-gradient-to-br text-white`
+            : `bg-white/5 backdrop-blur-xl`
         }
         ${className}
       `}
     >
       {/* ================= OPTIONAL BIG BACKGROUND ICON ================= */}
       {showBgIcon && icon && !isCentered && (
-        <div className="absolute right-6 top-1/2 -translate-y-1/2 scale-[2.6] text-white/15 pointer-events-none z-0">
+        <div className="absolute right-6 top-1/2 -translate-y-1/2 scale-[2.6] text-orange-400/20 pointer-events-none z-0">
           {icon}
         </div>
       )}
@@ -68,7 +73,7 @@ export default function StatCard({
         {isCentered ? (
           <>
             {icon && (
-              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
+              <div className="w-12 h-12 rounded-full bg-orange-100/80 text-orange-400 flex items-center justify-center backdrop-blur-md">
                 {icon}
               </div>
             )}
@@ -98,7 +103,7 @@ export default function StatCard({
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
                     {icon && (
-                      <div className="w-10 h-10 rounded-xl bg-black/20 backdrop-blur flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-xl bg-orange-100/80 text-orange-400 backdrop-blur flex items-center justify-center">
                         <div className="scale-[0.45] saturate-150 brightness-110">
                           {icon}
                         </div>
