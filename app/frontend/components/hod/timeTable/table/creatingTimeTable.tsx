@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface Class {
   id: string;
@@ -30,6 +30,8 @@ export default function TimetableManagement(){
   const [saving,setSaving] = useState(false);
   const [loading,setLoading] = useState(false);
   const [message,setMessage] = useState("");
+
+  const tableRef = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
     fetchClasses();
@@ -130,6 +132,40 @@ export default function TimetableManagement(){
     setSaving(false);
   };
 
+  const printTimetable = () => {
+
+    if (!tableRef.current) return;
+
+    const printContent = tableRef.current.innerHTML;
+
+    const newWindow = window.open("", "", "width=900,height=700");
+
+    if (newWindow) {
+
+      newWindow.document.write(`
+        <html>
+          <head>
+            <title>Timetable</title>
+            <style>
+              body{font-family:Arial;padding:20px}
+              table{border-collapse:collapse;width:100%}
+              th,td{border:1px solid #000;padding:8px;text-align:center}
+              th{background:#f2f2f2}
+            </style>
+          </head>
+          <body>
+            <h2>Class Timetable</h2>
+            ${printContent}
+          </body>
+        </html>
+      `);
+
+      newWindow.document.close();
+      newWindow.print();
+    }
+
+  };
+
   return(
 
     <div className="p-6">
@@ -174,7 +210,7 @@ export default function TimetableManagement(){
 
         <>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" ref={tableRef}>
 
           <table className="border w-full">
 
@@ -241,6 +277,13 @@ export default function TimetableManagement(){
           className="mt-6 bg-blue-600 text-white px-6 py-2 rounded"
         >
           {saving ? "Saving..." : "Save Timetable"}
+        </button>
+
+        <button
+          onClick={printTimetable}
+          className="mt-6 ml-4 bg-green-600 text-white px-6 py-2 rounded"
+        >
+          Print Timetable
         </button>
 
         </>
