@@ -109,8 +109,8 @@ export default function SearchInput({
               "absolute top-1/2 -translate-y-1/2",
               iconOnRight ? "right-3" : "left-3",
               "z-10 rounded-full p-1.5",
-              "text-white/70 hover:text-white",
-              "hover:bg-white/10"
+              "text-white",
+              "bg-orange-500 shadow-md  hover:bg-orange-600 transition",
             )}
           >
             <Icon size={18} />
@@ -131,25 +131,24 @@ export default function SearchInput({
             shouldShowIcon && !iconOnRight ? "pl-11" : "pl-4",
             shouldShowIcon && iconOnRight ? "pr-11" : "pr-4",
             "py-2.5 sm:py-3",
-            "bg-black/20 border border-white/10",
-            "text-gray-200 text-sm sm:text-base",
+            "bg-black/20 border border-black",
+            "text-black-200 text-sm sm:text-base",
             "placeholder-white/40",
             "focus:outline-none focus:ring-0",
             disabled && "opacity-60 cursor-not-allowed",
             inputClassName,
 
             // 👇 CONDITIONAL STYLING
-            isGlass
-              ? [
+            isGlass              ? [
                   "bg-black/30",
-                  "border border-white/20",
-                  "focus:border-lime-400/60",
-                ]
+                  "border border-black",
+                  "bg-black/20",
+            ]
+              
               : [
                   "bg-black/20",
-                  "border border-white/10",
-                  "hover:border-[var(--hover-color)]",
-                  "focus:border-[var(--primary-color)]",
+                  "border border-black",
+                   
                 ]
           )}
           style={

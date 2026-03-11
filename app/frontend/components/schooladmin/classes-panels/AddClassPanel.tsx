@@ -163,7 +163,7 @@ export default function AddClassPanel({ onCancel, onSuccess }: AddClassPanelProp
           type="button"
           onClick={handleSave}
           disabled={isSaving}
-          className="inline-flex items-center gap-2 rounded-xl bg-lime-400 px-3.5 py-2 text-xs font-semibold text-black hover:bg-lime-300 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#F54E02] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#E63F00] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
         >
           <Save size={14} />
           {isSaving ? "Saving..." : "Save Class"}

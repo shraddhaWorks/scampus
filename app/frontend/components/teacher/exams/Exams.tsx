@@ -104,10 +104,10 @@ export default function TeacherExamsTab() {
                 rightSlot={
                     <button
                         onClick={() => setView({ mode: "create" })}
-                        className="px-4 py-2.5 bg-lime-400 hover:bg-lime-500
-                          text-black font-bold rounded-xl transition-all
-                          shadow-[0_0_15px_rgba(163,230,53,0.3)] 
-                          hover:shadow-[0_0_20px_rgba(163,230,53,0.4)] flex items-center gap-2"
+                        className="px-4 py-2.5 bg-[#F54E02] hover:bg-[#E63F00]
+                          text-white font-bold rounded-xl transition-all
+                          shadow-[0_0_15px_rgba(245,78,2,0.3)] 
+                          hover:shadow-[0_0_20px_rgba(245,78,2,0.4)] flex items-center gap-2"
                     >
                         <Plus size={18} strokeWidth={3} /> Schedule Exam
                     </button>

@@ -84,7 +84,7 @@ export default function StudentEditPanel({
         <button
           onClick={onSave}
           disabled={saving}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-lime-400 px-5 py-3 text-sm font-semibold text-black hover:bg-lime-300 disabled:opacity-60"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#F54E02] px-5 py-3 text-sm font-semibold text-white hover:bg-[#E63F00] disabled:opacity-60"
         >
           <Save size={16} />
           {saving ? "Saving..." : "Save Changes"}

@@ -530,7 +530,7 @@ const SchoolAdminTeacherTab = () => {
             type="button"
             onClick={saveAttendance}
             disabled={saveAttendanceLoading}
-            className="px-6 py-2.5 bg-lime-400 hover:bg-lime-500 text-black font-bold rounded-xl shadow-[0_0_15px_rgba(163,230,53,0.3)] flex items-center gap-2 disabled:opacity-60"
+            className="px-6 py-2.5 bg-[#F54E02] hover:bg-[#E63F00] text-white font-bold rounded-xl shadow-[0_0_15px_rgba(245,78,2,0.3)] flex items-center gap-2 disabled:opacity-60"
           >
             <Save size={18} />
             {saveAttendanceLoading ? "Saving..." : "Save Today's Attendance"}

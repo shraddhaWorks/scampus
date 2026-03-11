@@ -155,7 +155,7 @@ export default function CreatePost({ onPublished }: CreatePostProps) {
           <button
             type="submit"
             disabled={posting}
-            className="w-full sm:w-auto bg-[#b4f42c] text-black px-4 py-2.5 md:px-6 md:py-2.5 rounded-full font-bold text-xs md:text-sm flex items-center justify-center gap-2 hover:bg-[#a3e028] transition disabled:opacity-60 shrink-0"
+            className="w-full sm:w-auto bg-[#F54E02] text-white px-4 py-2.5 md:px-6 md:py-2.5 rounded-full font-bold text-xs md:text-sm flex items-center justify-center gap-2 hover:bg-[#E63F00] transition disabled:opacity-60 shrink-0"
           >
             <Send className="w-3.5 h-3.5 md:w-4 md:h-4" /> {posting ? "Publishing..." : "Publish"}
           </button>

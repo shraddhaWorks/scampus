@@ -525,7 +525,7 @@ export default function CreateEventForm({
               type="button"
               onClick={handlePublish}
               disabled={submitting}
-              className="inline-flex items-center gap-2 rounded-xl bg-lime-400 px-6 py-2.5 text-sm font-semibold text-black shadow-lg shadow-lime-400/30 hover:bg-lime-300 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#F54E02] px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#F54E02]/30 hover:bg-[#E63F00] transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
               <Save size={16} />
               {submitting

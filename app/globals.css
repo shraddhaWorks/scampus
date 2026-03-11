@@ -20,11 +20,7 @@
 }
 
 body {
-  background: linear-gradient(135deg,
-      #28143F 0%,
-      #652875 40%,
-      #804A5F 70%,
-      #3F262F 100%);
+  background:#ffffff;
   font-family: var(--font-inter), sans-serif;
 }
 
@@ -146,4 +142,25 @@ textarea::placeholder {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(180, 240, 61, 0.5);
+}
+
+/* Scrollable container with responsive padding */
+.scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.75rem;
+  min-height: 0;
+}
+
+@media (min-width: 640px) {
+  .scroll-container {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .scroll-container {
+    padding: 1.5rem;
+  }
 }

@@ -14,9 +14,9 @@ export default function PrimaryButton({ title, loading,onClick }: ButtonProps) {
       whileTap={{ scale: 0.97 }}
       disabled={loading}
       type="submit"
-      className="bg-lime-400 text-slate-900 font-semibold
-       rounded-xl hover:bg-lime-500 
-       shadow-lg shadow-lime-400/20
+      className="bg-[#F54E02] text-white font-semibold
+       rounded-xl hover:bg-[#E63F00] 
+       shadow-lg shadow-[#F54E02]/20
        w-full py-3"
     >
       {loading ? "Logging in..." : title}

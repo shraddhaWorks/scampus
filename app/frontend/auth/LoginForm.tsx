@@ -54,7 +54,7 @@ export default function LoginForm() {
 
   return (
     <div className="relative z-10 w-full max-w-md">
-      <div className="rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.3)] backdrop-blur-xl bg-black/20">
+      <div className="rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.3)] bg-white text-black">
         {/* Header - logo from public folder (root path) */}
         <div className="p-8 pb-6 border-b border-white/5 flex flex-col items-center text-center bg-white/[0.02]">
           <img
@@ -62,7 +62,7 @@ export default function LoginForm() {
             alt="Timelly"
             className="h-12 w-40 mb-6 drop-shadow-[0_0_15px_rgba(163,230,53,0.3)] object-contain"
           />
-          <h1 className="text-2xl font-bold text-white mb-2">
+          <h1 className="text-2xl font-bold text-black mb-2">
             {isSwitchAccount ? "Switch Account" : "Welcome Back"}
           </h1>
           <p className="text-gray-400 text-sm">
@@ -137,7 +137,7 @@ export default function LoginForm() {
             <button
               type="submit"
               disabled={loading || (isSwitchAccount && !email)}
-              className="group w-full py-3.5 bg-lime-400 hover:bg-lime-500 text-black font-bold rounded-xl shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:shadow-[0_0_30px_rgba(163,230,53,0.5)] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="group w-full py-3.5 bg-orange-400 hover:bg-Orange-500 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:shadow-[0_0_30px_rgba(163,230,53,0.5)] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span className="h-5 w-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
@@ -164,7 +164,7 @@ export default function LoginForm() {
         <div className="px-8 py-5 bg-black/40 border-t border-white/5 text-center">
           <p className="text-gray-500 text-xs">
             Don&apos;t have an account?{" "}
-            <a href="#" className="text-lime-400 font-medium hover:underline">
+            <a href="#" className="text-black font-medium hover:underline">
               School Administrator
             </a>
           </p>

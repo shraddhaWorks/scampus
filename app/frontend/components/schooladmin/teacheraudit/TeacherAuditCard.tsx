@@ -173,7 +173,7 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
                   onClick={onOpenAddGood}
                   className={`h-14 xl:h-16 px-3 xl:px-6 rounded-xl flex items-center justify-center gap-2 text-[10px] xl:text-sm font-bold transition-all flex-1 xl:flex-none whitespace-nowrap ${
                     isAddFormOpen && addFormMode === "good"
-                      ? "bg-lime-400 text-black shadow-[0_0_15px_rgba(163,230,53,0.4)]"
+                      ? "bg-[#F54E02] shadow-[0_0_15px_rgba(245,78,2,0.4)]"
                       : "bg-white/10 border border-white/20 text-white hover:bg-white/20"
                   }`}
                 >
@@ -226,7 +226,7 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
                           onClick={() => { onCategoryChange(enumValue); onCustomCategoryChange(""); }}
                           className={`px-3 py-1.5 rounded-full text-[10px] xl:text-xs border transition-all ${
                             isSelected
-                              ? addFormMode === "good" ? "bg-lime-400 text-black border-lime-400" : "bg-red-500 text-white border-red-500"
+                              ? addFormMode === "good" ? "bg-[#F54E02] border-[#F54E02]" : "bg-red-500 text-white border-red-500"
                               : "border-white/20 text-white/70 hover:bg-white/10"
                           }`}
                         >

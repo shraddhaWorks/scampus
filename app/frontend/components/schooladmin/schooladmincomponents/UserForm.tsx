@@ -299,7 +299,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
           {/* Header */}
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className="h-9 w-9 rounded-full bg-lime-400/20 flex items-center justify-center">
+              <div className="h-9 w-9 rounded-full flex items-center justify-center">
                 <User className="w-5 h-5 text-lime-400" />
               </div>
               <div>
@@ -415,7 +415,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                     {(formData.subjects || []).map((s) => (
                       <span
                         key={s}
-                        className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-lime-400/20 border border-lime-400/30 text-lime-300 text-sm"
+                        className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-[#F54E02]/20 border border-[#F54E02]/30 text-white text-sm"
                       >
                         {s}
                         <button
@@ -455,7 +455,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                           setSubjectInput("");
                         }
                       }}
-                      className="px-4 py-2 rounded-xl bg-lime-400/20 border border-lime-400/30 text-lime-300 text-sm font-medium hover:bg-lime-400/30"
+                      className="px-4 py-2 rounded-xl bg-[#F54E02] border border-[#F54E02] text-white text-sm font-medium hover:bg-[#E63F00]"
                     >
                       Add
                     </button>
@@ -569,7 +569,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                   Choose which modules this user can access.
                 </p>
               </div>
-              <span className="text-[11px] font-medium text-lime-300 px-3 py-1 bg-lime-400/10 text-lime-400 text-xs font-bold rounded-full border border-lime-400/20">
+              <span className="text-[11px] font-medium text-white px-3 py-1 bg-lime-400/10 text-lime-400 text-xs font-bold rounded-full border border-lime-400/20">
                 {formData.allowedFeatures.length} Active
               </span>
             </div>
@@ -634,8 +634,8 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
           type="submit"
           disabled={submitting}
           whileHover={{ x: 4 }}
-          className="px-6 py-3 bg-lime-400 hover:bg-lime-500 text-black font-bold rounded-xl 
-          shadow-lg shadow-lime-400/20 transition-all flex items-center gap-2"
+          className="px-6 py-3 bg-[#F54E02] hover:bg-[#E63F00] text-white font-bold rounded-xl 
+          shadow-lg shadow-[#F54E02]/20 transition-all flex items-center gap-2"
         >
           {submitting ? (
             <>

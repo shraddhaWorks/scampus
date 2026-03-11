@@ -113,12 +113,12 @@ export default function MobileMoreOptions({
                 gap-2 p-4 rounded-xl
                 transition-all
                 ${isSettings
-                  ? "bg-lime-500/10 border border-lime-500/30"
+                  ? "bg-[#E63F00]/10 border border-[#E63F00]/30"
                   : "bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20"
                 }
               `}
             >
-              <Icon size={24} style={{ color: PRIMARY_COLOR }} />
+              <Icon size={24} style={{ color: isSettings ? "#E63F00" : PRIMARY_COLOR }} />
 
               {/* FIXED TEXT */}
               <span
@@ -144,10 +144,10 @@ export default function MobileMoreOptions({
           onClick={() => handleItemClick(logoutItem)}
           className="
             w-full py-3
-            bg-red-500/10 hover:bg-red-500/20
-            border border-red-500/30
+            bg-[#E63F00] hover:bg-[#D63000]
+            border border-[#E63F00]
             rounded-xl
-            text-red-400 font-medium
+            text-white font-medium
             flex items-center justify-center gap-2
           "
         >

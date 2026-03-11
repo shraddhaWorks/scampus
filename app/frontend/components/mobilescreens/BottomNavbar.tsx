@@ -72,7 +72,7 @@ export default function BottomNavBar({
                 flex-1 min-w-0
                 px-1.5
                 transition-all
-                ${isActive ? "text-lime-400" : "text-white/60"}
+                ${isActive ? "text-[#E63F00]" : "text-white/60"}
               `}
             >
               <Icon size={20} />

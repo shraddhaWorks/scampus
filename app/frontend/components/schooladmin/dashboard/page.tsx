@@ -132,8 +132,8 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen space-y-4 md:space-y-8 max-w-[1900px] mx-auto">
-      <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-2xl p-2 sm:p-8 md:p-4 mb-6 md:mb-10 bg-gradient-to-br from-white/5 to-transparent border-none">
-        <h2 className="text-2xl sm:text-4xl md:text-2xl font-black text-white mb-2 md:mb-3">
+      <div className="bg-white/5 backdrop-blur-xl text-black border-b border-white/10 rounded-2xl p-2 sm:p-8 md:p-4 mb-6 md:mb-10 bg-gradient-to-br from-white/5 to-transparent border-none">
+        <h2 className="text-2xl sm:text-4xl md:text-2xl font-black text-black mb-2 md:mb-3">
           Welcome back, {userName}! 👋
         </h2>
         <p className="text-gray-400 text-sm sm:text-base md:text-md font-medium">
@@ -237,7 +237,7 @@ export default function Dashboard() {
               <h3 className="text-xl font-bold text-white">Latest News</h3>
               <p className="text-gray-400 text-sm mt-0.5">Recent announcements and updates</p>
             </div>
-            <button onClick={()=>router.push(ROUTES.SCHOOLADMIN_NEWSFEED_TAB)} className="rounded-xl bg-lime-400 px-4 sm:px-5 py-2.5 text-sm font-bold text-black hover:bg-lime-300 transition-colors inline-flex items-center gap-1 min-h-[44px] touch-manipulation">
+            <button onClick={()=>router.push(ROUTES.SCHOOLADMIN_NEWSFEED_TAB)} className="rounded-xl bg-[#F54E02] px-4 sm:px-5 py-2.5 text-sm font-bold text-white hover:bg-[#E63F00] transition-colors inline-flex items-center gap-1 min-h-[44px] touch-manipulation">
               View All <span>→</span>
             </button>
           </div>

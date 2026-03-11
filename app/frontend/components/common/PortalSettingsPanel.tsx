@@ -306,7 +306,7 @@ export default function PortalSettingsPanel({ portal }: { portal: PortalVariant 
           type="button"
           onClick={handleSaveAll}
           disabled={!canSave || saving || passwordSaving}
-          className="px-7 py-3 rounded-2xl bg-lime-400 text-slate-950 font-semibold hover:bg-lime-300 disabled:opacity-55 disabled:cursor-not-allowed flex items-center gap-2 shadow-[0_12px_35px_rgba(163,230,53,0.35)]"
+          className="px-7 py-3 rounded-2xl bg-[#F54E02] text-white font-semibold hover:bg-[#E63F00] disabled:opacity-55 disabled:cursor-not-allowed flex items-center gap-2 shadow-[0_12px_35px_rgba(245,78,2,0.35)]"
         >
           <Save size={18} />
           {saving || passwordSaving ? "Saving..." : portal === "teacher" ? "Save All Settings" : "Save Changes"}

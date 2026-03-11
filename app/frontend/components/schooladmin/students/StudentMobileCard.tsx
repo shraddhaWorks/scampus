@@ -82,7 +82,7 @@ export default function StudentMobileCard({
         </button>
         <button
           onClick={() => onEdit(student)}
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-lime-400 px-3 py-2 text-xs font-semibold text-black hover:bg-lime-300"
+          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#F54E02] px-3 py-2 text-xs font-semibold text-white hover:bg-[#E63F00]"
         >
           <Pencil size={14} /> Edit
         </button>

@@ -20,7 +20,7 @@ export default function AllowedFeatureToggle({
   return (
     <label
       className={[
-        "flex items-center justify-between gap-3 p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-lime-400/40 cursor-pointer transition",
+        "flex items-center justify-between gap-3 p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-[#F54E02]/40 cursor-pointer transition",
         className || "",
       ].join(" ")}
     >
@@ -36,7 +36,7 @@ export default function AllowedFeatureToggle({
         onClick={onChange}
         className={[
           "relative inline-flex h-6 w-12 flex-shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
-          checked ? "bg-lime-400" : "bg-white/25",
+          checked ? "bg-[#F54E02]" : "bg-white/25",
         ].join(" ")}
       >
         <span

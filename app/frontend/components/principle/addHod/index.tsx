@@ -98,7 +98,7 @@ export default function AddHod() {
             type="submit"
             disabled={submitting}
             whileHover={{ x: 4 }}
-            className="px-6 py-3 bg-lime-400 hover:bg-lime-500 text-black font-bold rounded-xl shadow-lg shadow-lime-400/20 transition-all flex items-center gap-2 disabled:opacity-70"
+            className="px-6 py-3 bg-[#F54E02] hover:bg-[#E63F00] text-white font-bold rounded-xl shadow-lg shadow-[#F54E02]/20 transition-all flex items-center gap-2 disabled:opacity-70"
           >
             {submitting ? (
               <>

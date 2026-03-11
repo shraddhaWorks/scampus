@@ -779,7 +779,7 @@ export default function SchoolAdminClassesTab() {
 
                       <button
                         type="button"
-                      className="w-full rounded-xl bg-lime-400 text-black font-semibold py-2.5 hover:bg-lime-300 transition"
+                      className="w-full rounded-xl bg-[#F54E02] text-white font-semibold py-2.5 hover:bg-[#E63F00] transition"
                         onClick={async () => {
                           const className = mobileEdit?.className ?? row.name;
                           const section =

@@ -255,7 +255,7 @@ export default function EditClassPanel({
             type="button"
             onClick={handleSave}
             disabled={saveLoading || isLoadingClass || isLoadingTeachers}
-            className="h-[40px] lg:h-[46px] px-5 rounded-lg bg-lime-400 text-black font-semibold flex items-center justify-center gap-2 hover:bg-lime-300 transition text-sm disabled:opacity-50"
+            className="h-[40px] lg:h-[46px] px-5 rounded-lg bg-[#F54E02] text-white font-semibold flex items-center justify-center gap-2 hover:bg-[#E63F00] transition text-sm disabled:opacity-50"
           >
             <Save size={16} />
             {saveLoading ? "Saving..." : "Save"}

@@ -165,7 +165,7 @@ export default function StudentsSection({
             onClick={() => onToggleExpanded(row.id)}
             className={`p-2 rounded-xl transition-all ${
               isExpanded
-                ? "bg-lime-400 text-black"
+                ? "bg-[#F54E02]"
                 : "bg-white/10 text-white/80 hover:bg-white/20"
             }`}
             aria-label="Toggle student details"

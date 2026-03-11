@@ -28,7 +28,7 @@ const VARIANT_CLASSES: Record<AttendanceButtonVariant, string> = {
   primary:
     "bg-lime-400/10 border-lime-400/30 text-lime-300 hover:bg-lime-400/20 hover:border-lime-400/50",
   success:
-    "bg-lime-400 text-black border-lime-300 hover:bg-lime-300",
+    "bg-[#F54E02] text-white border-[#F54E02] hover:bg-[#E63F00]",
   danger:
     "bg-red-500 text-white border-red-400 hover:bg-red-400",
   warning:

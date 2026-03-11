@@ -152,7 +152,7 @@ export default function TeacherHomeworkTab() {
           <button
             type="button"
             onClick={() => setShowForm((s) => !s)}
-            className="w-full sm:w-auto px-6 py-3 rounded-full bg-lime-400 text-black font-semibold flex items-center justify-center gap-2 transition-transform active:scale-95"
+            className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#F54E02] text-white font-semibold flex items-center justify-center gap-2 transition-transform active:scale-95"
           >
             {showForm ? <X size={20} /> : <Plus size={20} />}
             <span className="text-sm md:text-base">

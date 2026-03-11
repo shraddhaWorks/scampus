@@ -22,7 +22,7 @@ export const EXAM_CARD_TRANSPARENT = "rgba(255, 255, 255, 0.06)";
 // Circulars & Notices (match design images)
 export const CIRCULAR_PRIMARY = "#a3e635"; // lime green - Create button, active filter
 export const CIRCULAR_SELECTED_RECIPIENT = "rgba(163, 230, 53, 0.35)"; // light green for "All"
-export const CIRCULAR_IMPORTANCE_HIGH = "#ef4444";
+export const CIRCULAR_IMPORTANCE_HIGH = "#22c55e";
 export const CIRCULAR_IMPORTANCE_MEDIUM = "#eab308";
 export const CIRCULAR_IMPORTANCE_LOW = "#3b82f6";
 export const CIRCULAR_DRAFT_YELLOW = "#eab308";

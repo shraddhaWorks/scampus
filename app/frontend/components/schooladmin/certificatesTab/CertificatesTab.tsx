@@ -315,7 +315,7 @@ export default function CertificatesTab({
                     <button
                       disabled={!!actingId}
                       onClick={() => openApproveModal(row.id)}
-                      className="flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-lime-400 text-black text-xs font-semibold disabled:opacity-50"
+                      className="flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-[#F54E02] text-white text-xs font-semibold disabled:opacity-50"
                     >
                       {actingId === row.id ? (
                         <Loader2 size={14} className="animate-spin" />
@@ -440,7 +440,7 @@ export default function CertificatesTab({
                           <button
                             disabled={!!actingId}
                             onClick={() => openApproveModal(row.id)}
-                            className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-lime-400 text-black text-xs font-semibold disabled:opacity-50"
+                            className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-[#F54E02] text-white text-xs font-semibold disabled:opacity-50"
                           >
                             {actingId === row.id ? (
                               <Loader2 size={14} className="animate-spin" />
@@ -574,7 +574,7 @@ export default function CertificatesTab({
                           <button
                             disabled={!!actingId}
                             onClick={() => openApproveModal(row.id)}
-                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-lime-400 text-black text-xs font-semibold disabled:opacity-50"
+                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-[#F54E02] text-white text-xs font-semibold disabled:opacity-50"
                           >
                             {actingId === row.id ? (
                               <Loader2 size={14} className="animate-spin" />
@@ -675,7 +675,7 @@ export default function CertificatesTab({
                 <button
                   onClick={() => handleApprove(approvingId)}
                   disabled={actingId === approvingId || uploadingFile}
-                  className="flex-1 px-4 py-3 bg-lime-400 text-black font-semibold rounded-lg hover:bg-lime-400/90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 px-4 py-3 bg-[#F54E02] text-white font-semibold rounded-lg hover:bg-[#E63F00] transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {actingId === approvingId || uploadingFile ? (
                     <>

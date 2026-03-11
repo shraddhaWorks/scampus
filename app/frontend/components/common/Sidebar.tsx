@@ -203,13 +203,13 @@ export default function AppSidebar({ menuItems, profile, activeTab = "dashboard"
       "
     >
       {/* Logo */}
-      <div className="h-21 flex items-center px-4 border-b border-white/10">
+      <div className="h-21 flex items-center px-4 border-b border-white/10 ">
         <BrandLogo isbrandLogoWhite />
       </div>
 
       {/* Profile */}
       <div className="px-4 py-4 border-b border-white/10" ref={profileRef}>
-        <div className="relative">
+        <div className="relative bg-amber-400 rounded-2xl ">
           <button
             onClick={() => enableSwitchAccounts && setProfileOpen((o) => !o)}
             className={`w-full bg-white/5 rounded-xl p-3 border border-white/10 text-left transition-all ${enableSwitchAccounts ? "hover:bg-white/10 cursor-pointer" : "cursor-default"}`}
@@ -225,10 +225,10 @@ export default function AppSidebar({ menuItems, profile, activeTab = "dashboard"
                 }}
               />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white break-words line-clamp-2">
+                <p className="text-sm font-semibold  break-words line-clamp-2 text-black">
                   {displayName}
                 </p>
-                <p className="text-xs text-white/60 break-words line-clamp-2">{subtitle}</p>
+                <p className="text-xs  break-words line-clamp-2">{subtitle}</p>
               </div>
               {enableSwitchAccounts && (
                 <ChevronDown
@@ -276,7 +276,7 @@ export default function AppSidebar({ menuItems, profile, activeTab = "dashboard"
                         <ChevronRight size={16} className="text-white/40 shrink-0" />
                       )}
                       {isCurrent && (
-                        <span className="text-[10px] text-lime-400 font-medium shrink-0">
+                        <span className="text-[10px]  text-[#E63F00] font-medium shrink-0">
                           Current
                         </span>
                       )}
@@ -303,23 +303,23 @@ export default function AppSidebar({ menuItems, profile, activeTab = "dashboard"
                 onClick={() => handleClick(item)}
                 className={`
                   w-full flex items-center gap-4 px-5 py-3 rounded-xl
-                  transition min-w-0
+                  transition min-w-0 
                   ${
                     isActive
-                      ? "bg-lime-400/10 text-lime-400 border border-lime-400/20 shadow-[0_0_22px_rgba(163,230,53,0.18)]"
-                      : "text-white/60 hover:bg-white/5 hover:text-white"
+                      ? "  bg-[#E63F00]/10 text-[#E63F00] border border-[#E63F00]/20 "
+                      : " text-black  hover:text-black "
                   }
                 `}
               >
                 <Icon
                   size={20}
                   className="flex-shrink-0"
-                  style={{ color: isActive ? PRIMARY_COLOR : "#9ca3af" }}
+                      style={{ color: isActive ? "#E63F00" : "#9ca3af" }}
                 />
                 <div className="min-w-0 text-left">
-                  <span className="block truncate text-sm ">{item.label}</span>
+                  <span className="block truncate text-sm text-black">{item.label}</span>
                   {item.description && (
-                    <span className="block truncate text-xs text-white/55">{item.description}</span>
+                    <span className="block truncate text-xs text-black/70">{item.description}</span>
                   )}
                 </div>
               </motion.button>
@@ -340,13 +340,13 @@ export default function AppSidebar({ menuItems, profile, activeTab = "dashboard"
                   onClick={() => handleClick(item)}
                   className={`
                     w-full flex items-center gap-4 px-5 py-3 rounded-xl
-                    transition min-w-0
+                    transition min-w-0 
                     ${
                       isLogout
-                        ? "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300"
+                        ? "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-sm font-medium bg-[#E63F00] text-white hover:bg-[#D63000] shadow-md"
                         : isActive
-                        ? "bg-lime-400/10 text-lime-400 border border-lime-400/20"
-                        : "text-white/60 hover:bg-white/5 hover:text-white"
+                        ? "bg-[#E63F00]/10 text-[#E63F00] border border-[#E63F00]/20 "
+                        : " text-black hover:text-black "
                     }
                   `}
                 >
@@ -354,10 +354,10 @@ export default function AppSidebar({ menuItems, profile, activeTab = "dashboard"
                     size={20}
                     className="flex-shrink-0"
                     style={{
-                      color: isLogout ? "#f87171" : isActive ? PRIMARY_COLOR : "#9ca3af",
+                      color: isLogout ? "#ffffff" : isActive ? "#E63F00" : "#9ca3af",
                     }}
                   />
-                  <span className="truncate text-sm">{item.label}</span>
+                  <span className="truncate text-sm text-black">{item.label}</span>
                 </motion.button>
               );
             })}

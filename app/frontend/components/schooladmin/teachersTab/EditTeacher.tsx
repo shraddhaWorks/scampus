@@ -154,7 +154,7 @@ const EditTeacher = ({ teacher, onClose, onSave }: Props) => {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-8 py-3 rounded-2xl bg-lime-400 text-black font-semibold disabled:opacity-60"
+            className="px-8 py-3 rounded-2xl bg-[#F54E02] text-white font-semibold disabled:opacity-60"
           >
             {saving ? "Saving..." : "Save Changes"}
           </button>

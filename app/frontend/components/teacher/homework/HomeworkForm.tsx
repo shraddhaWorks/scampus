@@ -267,7 +267,7 @@ export default function HomeworkForm({ classes, editing, onCancel, onSubmit }: P
           type="button"
           onClick={handleSubmit}
           disabled={saving}
-          className="w-full sm:w-auto px-8 py-3 rounded-full bg-lime-400 text-black font-bold shadow-lg shadow-lime-400/10 active:scale-95 transition-transform disabled:opacity-60"
+          className="w-full sm:w-auto px-8 py-3 rounded-full bg-[#F54E02] text-white font-bold shadow-lg shadow-[#F54E02]/10 active:scale-95 transition-transform disabled:opacity-60"
         >
           {saving ? "Saving…" : editing ? "Update Assignment" : "Assign Homework"}
         </button>

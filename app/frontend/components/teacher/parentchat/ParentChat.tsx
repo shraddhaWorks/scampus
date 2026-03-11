@@ -131,7 +131,7 @@ export default function TeacherParentChatTab() {
                   onClick={() => setActiveTab(tab)}
                   className={`px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-lg text-xs capitalize shrink-0 min-h-[40px] sm:min-h-0 touch-manipulation
                     ${activeTab === tab
-                      ? "bg-lime-500 text-black"
+                      ? "bg-[#F54E02] text-white"
                       : "bg-white/5 text-gray-400 hover:bg-white/10 active:bg-white/15"
                     }`}
                 >

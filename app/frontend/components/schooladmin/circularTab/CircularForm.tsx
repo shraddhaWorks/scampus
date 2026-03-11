@@ -25,9 +25,9 @@ type PublishStatus =
     typeof PUBLISH_STATUS[keyof typeof PUBLISH_STATUS];
 
 const IMPORTANCE_LEVELS = [
-    { label: "High", activeClass: "bg-red-500 text-white" },
-    { label: "Medium", activeClass: "bg-orange-400 text-black" },
-    { label: "Low", activeClass: "bg-blue-500 text-white" },
+    { label: "High", activeClass: "bg-[#F54E02] !text-black" },
+    { label: "Medium", activeClass: "bg-[#F54E02] !text-black" },
+    { label: "Low", activeClass: "bg-[#F54E02] !text-black" },
 ] as const;
 
 
@@ -441,7 +441,7 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
                         type="submit"
                         disabled={submitting}
                         whileTap={{ scale: submitting ? 1 : 0.97 }}
-                        className="px-6 py-2.5 bg-lime-400 hover:bg-lime-500 text-black font-bold rounded-xl shadow-lg shadow-lime-400/20 transition-all flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="px-6 py-2.5 bg-[#F54E02] hover:bg-[#E63F00] text-white font-bold rounded-xl shadow-lg shadow-[#F54E02]/20 transition-all flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                         <Save size={18} className="inline" />
                         {submitting ? "Creating…" : "Create Circular"}

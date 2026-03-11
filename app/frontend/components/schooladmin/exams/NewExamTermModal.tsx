@@ -172,8 +172,8 @@ export default function NewExamTermModal({
             <button
               type="submit"
               disabled={saving}
-              className=" flex-1 py-2.5 rounded-xl bg-lime-400 text-black font-bold 
-              hover:bg-lime-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className=" flex-1 py-2.5 rounded-xl bg-[#F54E02] text-white font-bold 
+              hover:bg-[#E63F00] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? (
                 <>

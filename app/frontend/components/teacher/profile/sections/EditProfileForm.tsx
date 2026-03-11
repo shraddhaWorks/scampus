@@ -80,7 +80,7 @@ export default function EditProfileForm({
           <button
             type="button"
             onClick={onSave}
-            className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 rounded-2xl bg-lime-400 px-7 py-2.5 text-base font-bold text-black shadow-[0_6px_24px_rgba(163,230,53,0.35)] hover:bg-lime-300"
+            className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 rounded-2xl bg-[#F54E02] px-7 py-2.5 text-base font-bold text-white shadow-[0_6px_24px_rgba(245,78,2,0.35)] hover:bg-[#E63F00]"
           >
             <Save size={18} />
             Save Teacher
