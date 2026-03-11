@@ -12,7 +12,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    if (session.user.role !== "SCHOOLADMIN") {
+    if (session.user.role !== "SCHOOLADMIN" && session.user.role !== "HOD") {
       return NextResponse.json(
         { message: "Only school admins can manage timetables" },
         { status: 403 }
