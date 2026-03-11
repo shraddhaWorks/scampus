@@ -67,18 +67,18 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [userName, setUserName] = useState("Rajesh");
-  const router=useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
         const [dashboardRes, userRes] = await Promise.all([
-          fetch("/api/school/dashboard", { 
+          fetch("/api/school/dashboard", {
             credentials: "include",
             cache: "no-store"
           }),
-          fetch("/api/user/me", { 
+          fetch("/api/user/me", {
             credentials: "include",
             cache: "no-store"
           }),
@@ -122,7 +122,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="min-h-screen p-6 md:p-10 flex items-center justify-center">
-        <div className="text-white/70"><Spinner/></div>
+        <div className="text-white/70"><Spinner /></div>
       </div>
     );
   }
@@ -212,7 +212,7 @@ export default function Dashboard() {
                   status: t.status === "APPROVED" ? "Approved" : "Pending",
                   type: "teacher" as const,
                 }))}
-                onViewAllClick={()=>router.push(ROUTES.SCHOOLADMIN_TEACHER_LEAVE_TAB)}
+                onViewAllClick={() => router.push(ROUTES.SCHOOLADMIN_TEACHER_LEAVE_TAB)}
               />
               <SidebarList
                 title="Recent Activities"
@@ -231,13 +231,13 @@ export default function Dashboard() {
       )}
 
       {data?.latestNews && data.latestNews.length > 0 && (
-        <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-2xl p-5 sm:p-6 md:p-8">
+        <div className="bg-white/5 backdrop-blur-xl border border-gray-500/30 rounded-2xl p-5 sm:p-6 md:p-8 shadow-md">
           <div className="flex justify-between items-start mb-6">
             <div>
               <h3 className="text-xl font-bold text-white">Latest News</h3>
               <p className="text-gray-400 text-sm mt-0.5">Recent announcements and updates</p>
             </div>
-            <button onClick={()=>router.push(ROUTES.SCHOOLADMIN_NEWSFEED_TAB)} className="rounded-xl bg-[#F54E02] px-4 sm:px-5 py-2.5 text-sm font-bold text-white hover:bg-[#E63F00] transition-colors inline-flex items-center gap-1 min-h-[44px] touch-manipulation">
+            <button onClick={() => router.push(ROUTES.SCHOOLADMIN_NEWSFEED_TAB)} className="rounded-xl bg-[#F54E02] px-4 sm:px-5 py-2.5 text-sm font-bold text-white hover:bg-[#E63F00] transition-colors inline-flex items-center gap-1 min-h-[44px] touch-manipulation">
               View All <span>→</span>
             </button>
           </div>
@@ -274,7 +274,7 @@ export default function Dashboard() {
           </button>
         </div>
       )}
-      
+
       {!data && !error && !loading && (
         <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-2xl p-8 text-center text-gray-400">
           No dashboard data available.

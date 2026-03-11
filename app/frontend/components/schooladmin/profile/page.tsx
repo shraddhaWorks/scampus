@@ -163,7 +163,7 @@ export default function StudentDetailsPage() {
           </div>
         }
       />
-      <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-2xl p-4 sm:p-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+      <div className="bg-white/5 backdrop-blur-xl border border-gray-500/30 rounded-2xl p-4 sm:p-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 shadow-md">
         <div>
           <label className="text-xs text-gray-500 mb-2 block">Search Student</label>
           <div className="relative">

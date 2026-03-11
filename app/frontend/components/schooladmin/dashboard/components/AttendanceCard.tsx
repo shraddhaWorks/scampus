@@ -26,7 +26,7 @@ export const AttendanceCard = ({
   ];
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-2xl p-4 sm:p-6 md:p-8 flex-grow">
+    <div className="bg-white/5  border border-gray-500/30 rounded-2xl p-4 sm:p-6 md:p-8 flex-grow shadow-2xl">
       <div className="mb-4 sm:mb-6 md:mb-8">
         <h3 className="text-base sm:text-lg md:text-xl font-bold text-white">Students Attendance Overview</h3>
         <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">Today&apos;s attendance summary</p>
@@ -34,7 +34,7 @@ export const AttendanceCard = ({
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 md:mb-10">
         {stats.map((stat) => (
-          <div key={stat.label} className="bg-white/5 border border-white/5 rounded-xl md:rounded-[20px] py-4 sm:py-5 md:py-6 px-3 sm:px-4 text-center">
+          <div key={stat.label} className="bg-white/5 border border-gray-500/30 rounded-xl md:rounded-[20px] py-4 sm:py-5 md:py-6 px-3 sm:px-4 text-center shadow-md">
             <h4 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${stat.color}`}>{stat.value}</h4>
             <p className="text-[10px] sm:text-[11px] text-gray-500 uppercase font-bold mt-1 sm:mt-2 tracking-widest">{stat.label}</p>
             <p className={`text-[10px] sm:text-[11px] font-bold mt-0.5 sm:mt-1 ${stat.color} opacity-80`}>{stat.pct}</p>

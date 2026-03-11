@@ -13,7 +13,10 @@ interface TeacherStatCardProps {
 
 export default function TeacherStatCard({ avatar, name, code, percentage, stats, statuses, onStatusChange }: TeacherStatCardProps) {
   return (
-    <motion.div whileHover={{ y: -4 }} className="bg-[#0F172A]/40 rounded-2xl border border-white/10 flex flex-col overflow-hidden hover:border-lime-400/30 transition-all">
+    <motion.div
+      whileHover={{ y: [0, -10, 0, -5, 0], transition: { duration: 0.55, ease: "easeOut" } }}
+      className="bg-[#0F172A]/40 rounded-2xl border border-gray-500/30 flex flex-col overflow-hidden hover:border-lime-400/30 transition-all shadow-md"
+    >
       <div className="p-4 flex items-center justify-between gap-3 bg-white/[0.03]">
         <div className="flex items-center gap-3 min-w-0">
           <img src={avatar} className="w-11 h-11 rounded-full object-cover ring-2 ring-white/10" alt={name} />

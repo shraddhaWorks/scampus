@@ -6,6 +6,7 @@ import {
   Area,
   BarChart,
   Bar,
+  CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
@@ -152,8 +153,20 @@ export default function AnalysisDashboard() {
     },
   ];
   const axisStyle = {
-    stroke: "rgba(255,255,255,0.45)",
+    stroke: "rgba(0,0,0,0.65)",
     fontSize: 11,
+  };
+
+  const tooltipStyle = {
+    contentStyle: {
+      backgroundColor: "#ffffff",
+      border: "1px solid rgba(107, 114, 128, 0.3)",
+      borderRadius: "12px",
+      boxShadow: "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1)",
+      color: "#000000",
+    },
+    labelStyle: { color: "#000000" },
+    itemStyle: { color: "#000000" },
   };
 
   const feesData = (data.charts?.monthlyFeesCollection ?? []).map((f) => ({
@@ -296,10 +309,10 @@ export default function AnalysisDashboard() {
 
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white/10 backdrop-blur-md min-h-[280px] sm:min-h-[320px]">
+        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white backdrop-blur-md min-h-[280px] sm:min-h-[320px] border border-gray-500/30 shadow-md">
           <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-lime-400 shrink-0" />
-            <h3 className="font-semibold text-white text-xs sm:text-sm">
+            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400 shrink-0" />
+            <h3 className="font-semibold text-black text-xs sm:text-sm">
               Monthly Fees Collection
             </h3>
           </div>
@@ -307,10 +320,11 @@ export default function AnalysisDashboard() {
             <AreaChart data={feesData}>
               <defs>
                 <linearGradient id="fees" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#a3e635" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#a3e635" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#fb923c" stopOpacity={0.7} />
+                  <stop offset="95%" stopColor="#fb923c" stopOpacity={0.08} />
                 </linearGradient>
               </defs>
+              <CartesianGrid stroke="rgba(107,114,128,0.2)" vertical={false} />
               <XAxis
                 dataKey="month"
                 {...axisStyle}
@@ -318,27 +332,28 @@ export default function AnalysisDashboard() {
                 axisLine={false}
               />
               <YAxis {...axisStyle} tickLine={false} axisLine={false} />
-              <Tooltip />
+              <Tooltip {...tooltipStyle} />
               <Area
                 type="monotone"
                 dataKey="value"
-                stroke="#a3e635"
+                stroke="#f97316"
                 fill="url(#fees)"
-                strokeWidth={2}
+                strokeWidth={3}
               />
             </AreaChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white/10 backdrop-blur-md min-h-[280px] sm:min-h-[320px]">
+        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white backdrop-blur-md min-h-[280px] sm:min-h-[320px] border border-gray-500/30 shadow-md">
           <div className="flex items-center gap-2 mb-4">
-            <Users className="w-4 h-4 sm:w-5 sm:h-5 text-sky-400 shrink-0" />
-            <h3 className="font-semibold text-white text-xs sm:text-sm">
+            <Users className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400 shrink-0" />
+            <h3 className="font-semibold text-black text-xs sm:text-sm">
               Student Enrollment Growth
             </h3>
           </div>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={enrollmentData} barCategoryGap="35%">
+              <CartesianGrid stroke="rgba(107,114,128,0.2)" vertical={false} />
               <XAxis
                 dataKey="year"
                 {...axisStyle}
@@ -346,8 +361,8 @@ export default function AnalysisDashboard() {
                 axisLine={false}
               />
               <YAxis {...axisStyle} tickLine={false} axisLine={false} />
-              <Tooltip />
-              <Bar dataKey="students" fill="#60a5fa" barSize={24} />
+              <Tooltip {...tooltipStyle} />
+              <Bar dataKey="students" fill="#f97316" barSize={24} radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -355,15 +370,16 @@ export default function AnalysisDashboard() {
 
       {/* Charts Row 2 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white/10 backdrop-blur-md min-h-[280px] sm:min-h-[320px]">
+        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white backdrop-blur-md min-h-[280px] sm:min-h-[320px] border border-gray-500/30 shadow-md">
           <div className="flex items-center gap-2 mb-4">
-            <CalendarCheck className="w-4 h-4 sm:w-5 sm:h-5 text-sky-400 shrink-0" />
-            <h3 className="font-semibold text-white text-xs sm:text-sm">
+            <CalendarCheck className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400 shrink-0" />
+            <h3 className="font-semibold text-black text-xs sm:text-sm">
               Attendance: Students vs Teachers
             </h3>
           </div>
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={attendanceData}>
+              <CartesianGrid stroke="rgba(107,114,128,0.2)" vertical={false} />
               <XAxis
                 dataKey="day"
                 {...axisStyle}
@@ -376,37 +392,40 @@ export default function AnalysisDashboard() {
                 axisLine={false}
                 tickFormatter={(v) => `${v}%`}
               />
-              <Tooltip formatter={(value: any) => `${value}%`} />
+              <Tooltip {...tooltipStyle} formatter={(value: any) => `${value}%`} />
               <Line
                 type="monotone"
                 dataKey="students"
-                stroke="#60a5fa"
-                strokeWidth={2}
+                stroke="#f97316"
+                strokeWidth={3}
+                dot={{ r: 4, fill: "#f97316" }}
               />
               <Line
                 type="monotone"
                 dataKey="teachers"
-                stroke="#a3e635"
-                strokeWidth={2}
+                stroke="#1f2937"
+                strokeWidth={3}
+                dot={{ r: 4, fill: "#1f2937" }}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white/10 backdrop-blur-md min-h-[280px] sm:min-h-[320px]">
+        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white backdrop-blur-md min-h-[280px] sm:min-h-[320px] border border-gray-500/30 shadow-md">
           <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 bg-dark-400 shrink-0" />
-              <h3 className="font-semibold text-white text-xs sm:text-sm">
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400 bg-dark-400 shrink-0" />
+              <h3 className="font-semibold text-black text-xs sm:text-sm">
                 Subject Performance
               </h3>
             </div>
-            <span className="text-[10px] sm:text-xs text-white/50 border border-white/10 rounded-lg px-2 py-1">
+            <span className="text-[10px] sm:text-xs text-black/60 border border-gray-500/30 rounded-lg px-2 py-1">
               All Exams
             </span>
           </div>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={subjectData} layout="vertical">
+              <CartesianGrid stroke="rgba(107,114,128,0.2)" horizontal={false} />
               <XAxis
                 type="number"
                 {...axisStyle}
@@ -421,8 +440,8 @@ export default function AnalysisDashboard() {
                 axisLine={false}
                 width={70}
               />
-              <Tooltip />
-              <Bar dataKey="score" fill="#facc15" barSize={18} />
+              <Tooltip {...tooltipStyle} />
+              <Bar dataKey="score" fill="#f97316" barSize={18} radius={[0, 8, 8, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
