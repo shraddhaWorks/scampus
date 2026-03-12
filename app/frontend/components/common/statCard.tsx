@@ -129,7 +129,7 @@ export default function StatCard({
             {children}
 
             {footer && (
-              <div className="mt-4 text-sm text-white/60">
+              <div className="mt-4 text-sm text-black/60">
                 {footer}
               </div>
             )}

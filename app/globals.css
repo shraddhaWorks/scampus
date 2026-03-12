@@ -44,12 +44,26 @@ caption,
 small,
 strong,
 em,
-button,
 input,
 textarea,
 select,
 option {
   color: #000000 !important;
+}
+
+button {
+  color: #ffffff;
+}
+
+button[class*="bg-white"],
+button[class*="bg-gray-50"],
+button[class*="bg-gray-100"],
+button[class*="bg-orange-100"] {
+  color: #000000 !important;
+}
+
+button:not([class*="bg-white"]):not([class*="bg-gray-50"]):not([class*="bg-gray-100"]):not([class*="bg-orange-100"]) {
+  color: #ffffff !important;
 }
 
 

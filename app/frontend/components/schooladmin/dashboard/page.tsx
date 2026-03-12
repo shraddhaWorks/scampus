@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { StatCard } from "../dashboard/components/StatCard";
 import { AttendanceCard } from "./components/AttendanceCard";
 import { SidebarList } from "./components/SidebarList";
-import { Users, GraduationCap, UserCheck, CalendarDays, Wallet } from "lucide-react";
+import { Users, GraduationCap, UserCheck, CalendarDays, Wallet, MoveRight } from "lucide-react";
 import Spinner from "../../common/Spinner";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/app/frontend/constants/routes";
@@ -238,7 +238,7 @@ export default function Dashboard() {
               <p className="text-gray-400 text-sm mt-0.5">Recent announcements and updates</p>
             </div>
             <button onClick={() => router.push(ROUTES.SCHOOLADMIN_NEWSFEED_TAB)} className="rounded-xl bg-[#F54E02] px-4 sm:px-5 py-2.5 text-sm font-bold text-white hover:bg-[#E63F00] transition-colors inline-flex items-center gap-1 min-h-[44px] touch-manipulation">
-              View All <span>→</span>
+              View All <span className="text-white"><MoveRight className="text-white"/></span>
             </button>
           </div>
           <div className="space-y-6">
