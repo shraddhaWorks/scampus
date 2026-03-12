@@ -288,7 +288,7 @@ export default function ExamsTab() {
                             type="button"
                             onClick={addExamType}
                             disabled={examTypeSaving}
-                            className="px-4 py-2.5 rounded-2xl bg-[#B4F42A] text-black text-sm font-bold inline-flex items-center justify-center gap-2 disabled:opacity-60"
+                            className="px-4 py-2.5 rounded-2xl bg-[#d17213] text-black text-sm font-bold inline-flex items-center justify-center gap-2 disabled:opacity-60"
                         >
                             <Plus size={16} />
                             {examTypeSaving ? "Saving..." : "Add"}
@@ -391,7 +391,7 @@ export default function ExamsTab() {
                     {/* SCHEDULE */}
                     <div className="somu rounded-3xl p-5 border-none mt-4">
                         <h3 className="font-bold mb-4 flex items-center gap-2 text-white/80">
-                            <Calendar size={16} className="text-[#B4F42A]" /> Schedule
+                            <Calendar size={16} className="text-[#e69509]" /> Schedule
                         </h3>
                         <div className="space-y-3">
                             {(showAllSchedules ? activeSchedules : activeSchedules.slice(0, 2)).map((exam) => (
@@ -428,7 +428,7 @@ export default function ExamsTab() {
                     {isTermCompleted ? (
                         <div className="somu rounded-3xl p-12 border-none flex flex-col items-center justify-center text-center">
                             <div className="bg-white/5 p-6 rounded-full mb-4">
-                                <CheckCircle2 size={48} className="text-[#B4F42A]" />
+                                <CheckCircle2 size={48} className="text-[#c05a0d]" />
                             </div>
                             <h2 className="text-2xl font-bold mb-2">Examination Completed</h2>
                             <p className="text-white/40 max-w-xs">
