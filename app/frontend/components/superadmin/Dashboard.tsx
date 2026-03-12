@@ -97,19 +97,19 @@ export default function Dashboard() {
             <StatCard
               title="Total Schools"
               value={fmtNum(stats.totalSchools)}
-              icon={<School size={22} className="sm:w-10 sm:h-10 text-lime-300" />}
+              icon={<School size={22} className="sm:w-10 sm:h-10" />}
               footer="Active institutions"
             />
             <StatCard
               title="Total Students"
               value={fmtNum(stats.totalStudents)}
-              icon={<Users size={22} className="sm:w-10 sm:h-10 text-lime-300" />}
+              icon={<Users size={22} className="sm:w-10 sm:h-10" />}
               footer="Across all schools"
             />
             <StatCard
               title="Total Teachers"
               value={fmtNum(stats.totalTeachers)}
-              icon={<GraduationCap size={22} className="sm:w-10 sm:h-10 text-lime-300" />}
+              icon={<GraduationCap size={22} className="sm:w-10 sm:h-10" />}
               footer="Across all schools"
             />
             <StatCard title="Schools" className="w-full">
@@ -154,7 +154,7 @@ export default function Dashboard() {
                 <span>Date</span>
               </div>
               {feeTransactions.length === 0 ? (
-                <div className="px-4 py-6 text-sm text-white/60 text-center">No transactions yet</div>
+                <div className="px-4 py-6 text-sm text-black/60 text-center">No transactions yet</div>
               ) : (
                 feeTransactions.slice(0, 10).map((t) => (
                   <div key={t.id} className="grid grid-cols-4 gap-2 items-center px-3 sm:px-4 py-3 border-t border-white/10 text-xs sm:text-sm">
