@@ -71,7 +71,7 @@ export default function LoginForm() {
               : "Sign in to access your dashboard"}
           </p>
           {isSwitchAccount && email && (
-            <p className="text-lime-400/90 text-sm font-medium mt-2 truncate max-w-full px-4">
+            <p className=" text-lime-400 text-sm font-medium mt-2 truncate max-w-full px-4">
               {email}
             </p>
           )}
@@ -90,14 +90,14 @@ export default function LoginForm() {
                   Email Address
                 </label>
                 <div className="relative group">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 group-focus-within:text-lime-400 pointer-events-none" />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 group-focus-within:text-orange-400 pointer-events-none" />
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your school email"
-                    className="w-full pl-11 pr-4 py-3.5 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-lime-400/50 focus:bg-black/60 text-sm"
+                    className="w-full pl-11 pr-4 py-3.5 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-orange-400 focus:bg-black/60 text-sm"
                   />
                 </div>
               </div>
@@ -110,7 +110,7 @@ export default function LoginForm() {
                 </label>
               </div>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 group-focus-within:text-lime-400 pointer-events-none" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 group-focus-within:text-orange-400 pointer-events-none" />
                 <input
                   type={showPassword ? "text" : "password"}
                   required
