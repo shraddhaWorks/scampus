@@ -11,7 +11,7 @@ export default function SectionHeader({ title }: { title: string }) {
 
   const handleClick = () => {
     if (!session?.user?.role) return;
-    
+
     const role = session.user.role;
     const portalRoutes: Record<string, string> = {
       STUDENT: ROUTES.PARENT,
@@ -33,7 +33,7 @@ export default function SectionHeader({ title }: { title: string }) {
       className="text-base sm:text-lg md:text-xl font-bold text-black m-1 hover:text-black transition cursor-pointer text-left truncate"
       title="Click to go to dashboard"
     >
-      {title}
+      <h1>{title}</h1>
     </button>
   );
 }

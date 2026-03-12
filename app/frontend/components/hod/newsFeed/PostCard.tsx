@@ -30,7 +30,7 @@ export default function PostCard({ post, onLike }: PostCardProps) {
         <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/20 flex-shrink-0 overflow-hidden ring-2 ring-white/10">
             <div className="w-full h-full flex items-center justify-center text-white/90 text-sm font-semibold">
-              <img src= { photoUrl} alt={authorName} className="w-full h-full object-cover" />
+              <img src={photoUrl} alt={authorName} className="w-full h-full object-cover" />
             </div>
           </div>
           <div className="min-w-0">
@@ -72,9 +72,8 @@ export default function PostCard({ post, onLike }: PostCardProps) {
                 {images.map((_, i) => (
                   <span
                     key={i}
-                    className={`w-1.5 h-1.5 rounded-full transition ${
-                      i === currentIndex ? "bg-white" : "bg-white/50"
-                    }`}
+                    className={`w-1.5 h-1.5 rounded-full transition ${i === currentIndex ? "bg-white" : "bg-white/50"
+                      }`}
                     aria-hidden
                   />
                 ))}
@@ -84,7 +83,7 @@ export default function PostCard({ post, onLike }: PostCardProps) {
         </div>
       )}
 
-      <div className="p-4 sm:p-5 md:p-6 bg-[#2d1b2d]/90 backdrop-blur-xl">
+      <div className="p-4 sm:p-5 md:p-6  backdrop-blur-xl">
         <button
           type="button"
           onClick={() => onLike(post.id)}
