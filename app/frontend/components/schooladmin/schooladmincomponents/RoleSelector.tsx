@@ -62,7 +62,7 @@ export default function RoleSelector({
                 size={16}
                 className={clsx(
                   "transition-colors",
-                  isActive ? "text-lime-400" : "text-white/40"
+                  isActive ? "text-orange-500" : "text-orange-500/60"
                 )}
               />
 
