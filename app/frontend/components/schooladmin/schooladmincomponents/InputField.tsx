@@ -31,7 +31,7 @@ export default function InputField({
       </label>
       <div className="relative">
         {icon ? (
-          <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-white/40">
+          <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-orange-500">
             {icon}
           </span>
         ) : null}

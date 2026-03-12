@@ -299,8 +299,8 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
           {/* Header */}
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className="h-9 w-9 rounded-full flex items-center justify-center">
-                <User className="w-5 h-5 text-lime-400" />
+              <div className="h-9 w-9 rounded-full bg-orange-500/20 flex items-center justify-center">
+                <User className="w-5 h-5 text-orange-500" />
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-white">User Information</h2>
@@ -327,7 +327,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
               value={formData.name}
               onChange={(v) => handleChange("name", v)}
               placeholder="Enter full name"
-              icon={<User className="w-4 h-4" />}
+              icon={<User className="w-4 h-4 text-orange-500" />}
               required
             />
 
@@ -336,7 +336,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
               value={formData.designation || ""}
               onChange={(v) => handleChange("designation", v)}
               placeholder="e.g. Senior Teacher"
-              icon={<Briefcase className="w-4 h-4" />}
+              icon={<Briefcase className="w-4 h-4 text-orange-500" />}
             />
 
             <InputField
@@ -344,7 +344,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
               value={formData.email}
               onChange={(v) => handleChange("email", v)}
               placeholder="user@timelly.school"
-              icon={<Mail className="w-4 h-4" />}
+              icon={<Mail className="w-4 h-4 text-orange-500" />}
               required
             />
             <InputField
@@ -352,7 +352,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
               value={formData.username}
               onChange={(v) => handleChange("username", v)}
               placeholder="Enter username"
-              icon={<User className="w-4 h-4" />}
+              icon={<User className="w-4 h-4 text-orange-500" />}
               required
             />
 
@@ -361,7 +361,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
               value={formData.password || ""}
               onChange={(v) => handleChange("password", v)}
               placeholder="Enter password"
-              icon={<Lock className="w-4 h-4" />}
+              icon={<Lock className="w-4 h-4 text-orange-500" />}
               type="password"
               required={mode === "create"}
             />
@@ -372,7 +372,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                 value={formData.confirmPassword || ""}
                 onChange={(v) => handleChange("confirmPassword", v)}
                 placeholder="Confirm password"
-                icon={<Lock className="w-4 h-4" />}
+                icon={<Lock className="w-4 h-4 text-orange-500" />}
                 type="password"
                 required
               />
@@ -384,7 +384,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                 value={formData.department || ""}
                 onChange={(v) => handleChange("department", v)}
                 placeholder="e.g. Mathematics, Science"
-                icon={<Briefcase className="w-4 h-4" />}
+                icon={<Briefcase className="w-4 h-4 text-orange-500" />}
               />
             )}
           </div>
@@ -393,8 +393,8 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
           {formData.role === "TEACHER" && (
             <div className="space-y-4 pt-4 border-t border-white/10">
               <div className="flex items-center gap-2">
-                <div className="h-9 w-9 rounded-full bg-lime-400/20 flex items-center justify-center">
-                  <Briefcase className="w-5 h-5 text-lime-400" />
+                <div className="h-9 w-9 rounded-full bg-orange-400/20 flex items-center justify-center">
+                  <Briefcase className="w-5 h-5 text-orange-400" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-white">Teacher Details</h3>
@@ -407,7 +407,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                   value={formData.teacherId || ""}
                   onChange={(v) => handleChange("teacherId", v)}
                   placeholder="e.g. TCH005"
-                  icon={<User2 className="w-4 h-4" />}
+                  icon={<User2 className="w-4 h-4 text-orange-500" />}
                 />
                 <div>
                   <label className="block text-xs font-medium text-white/70 mb-1.5">Subject(s)</label>
@@ -481,7 +481,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                           }}
                           className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
                             selected
-                              ? "bg-lime-400/30 border-lime-400/50 text-lime-200"
+                              ? "bg-lime-400/30 border-lime-400/50 text-orange-200"
                               : "bg-white/5 border-white/10 text-white/60 hover:border-white/20"
                           }`}
                         >
@@ -500,27 +500,27 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                   value={formData.qualification || ""}
                   onChange={(v) => handleChange("qualification", v)}
                   placeholder="e.g. M.Sc, B.Ed"
-                  icon={<BookOpen className="w-4 h-4" />}
+                  icon={<BookOpen className="w-4 h-4 text-orange-500" />}
                 />
                 <InputField
                   label="Experience"
                   value={formData.experience || ""}
                   onChange={(v) => handleChange("experience", v)}
                   placeholder="e.g. 5 Years"
-                  icon={<Briefcase className="w-4 h-4" />}
+                  icon={<Briefcase className="w-4 h-4 text-orange-500" />}
                 />
                 <InputField
                   label="Joining Date"
                   value={formData.joiningDate || ""}
                   onChange={(v) => handleChange("joiningDate", v)}
                   placeholder="dd-mm-yyyy"
-                  icon={<Calendar className="w-4 h-4" />}
+                  icon={<Calendar className="w-4 h-4 text-orange-500" />}
                 />
                 <div>
                   <label className="block text-xs font-medium text-white/70 mb-1.5">Status</label>
                   <div className="relative">
-                    <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-white/40">
-                      <CheckCircle className="w-4 h-4" />
+                    <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-orange-500">
+                      <CheckCircle className="w-4 h-4 text-orange-500" />
                     </span>
                     <select
                       value={formData.teacherStatus || "Active"}
@@ -537,13 +537,13 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
                   value={formData.mobile || ""}
                   onChange={(v) => handleChange("mobile", v)}
                   placeholder="+91..."
-                  icon={<Phone className="w-4 h-4" />}
+                  icon={<Phone className="w-4 h-4 text-orange-500" />}
                 />
                 <div className="md:col-span-2">
                   <label className="block text-xs font-medium text-white/70 mb-1.5">Address</label>
                   <div className="relative">
-                    <span className="pointer-events-none absolute left-3 top-3 text-white/40">
-                      <MapPin className="w-4 h-4" />
+                    <span className="pointer-events-none absolute left-3 top-3 text-orange-500">
+                      <MapPin className="w-4 h-4 text-orange-500" />
                     </span>
                     <textarea
                       value={formData.address || ""}
@@ -564,12 +564,12 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
           <div className="col-span-1 bg-black/20 bg-gradient-to-b from-white/10/5 to-white/0 rounded-2xl p-5 flex flex-col gap-4 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 h-full">
             <div className="flex items-center justify-between gap-2">
               <div>
-                <h3 className="text-lg font-bold text-gray-100 flex items-center gap-2"><Shield className="lucide lucide-shield w-5 h-5 text-lime-400" /> Access Control</h3>
+                <h3 className="text-lg font-bold text-gray-100 flex items-center gap-2"><Shield className="lucide lucide-shield w-5 h-5 text-orange-400" /> Access Control</h3>
                 <p className="text-[11px] text-white/50">
                   Choose which modules this user can access.
                 </p>
               </div>
-              <span className="text-[11px] font-medium text-white px-3 py-1 bg-lime-400/10 text-lime-400 text-xs font-bold rounded-full border border-lime-400/20">
+              <span className="text-[11px] font-medium text-white px-3 py-1 bg-lime-400/10 text-orange-400 text-xs font-bold rounded-full border border-lime-400/20">
                 {formData.allowedFeatures.length} Active
               </span>
             </div>
@@ -621,7 +621,7 @@ export default function UserForm({ mode = "create", initialData }: UserFormProps
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-3 px-4 py-3 rounded-lg bg-lime-400/20 border border-lime-400/30"
         >
-          <CheckCircle size={18} className="text-lime-400 flex-shrink-0" />
+          <CheckCircle size={18} className="text-orange-400 flex-shrink-0" />
           <span className="text-sm text-lime-300">
             User {userId ? "updated" : "created"} successfully!
           </span>
