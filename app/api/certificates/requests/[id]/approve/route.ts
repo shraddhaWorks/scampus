@@ -28,8 +28,8 @@ export async function POST(
         
         // If file is provided, upload it
         if (file && file instanceof File) {
-          // Upload file to Supabase
-          const { supabaseAdmin, SUPABASE_BUCKET } = await import("@/lib/supabase");
+          // Upload file to Supabase (certificates bucket)
+          const { supabaseAdmin, SUPABASE_CERTIFICATES_BUCKET } = await import("@/lib/supabase");
           
           if (supabaseAdmin) {
             const ext = file.name.split(".").pop() || "pdf";
@@ -39,7 +39,7 @@ export async function POST(
             const buffer = Buffer.from(await file.arrayBuffer());
             
             const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
-              .from(SUPABASE_BUCKET)
+              .from(SUPABASE_CERTIFICATES_BUCKET)
               .upload(path, buffer, {
                 contentType: file.type,
                 upsert: false,
@@ -54,7 +54,7 @@ export async function POST(
             }
             
             const { data: urlData } = supabaseAdmin.storage
-              .from(SUPABASE_BUCKET)
+              .from(SUPABASE_CERTIFICATES_BUCKET)
               .getPublicUrl(uploadData.path);
             
             documentUrl = urlData.publicUrl;
